@@ -1,3 +1,26 @@
+// Load shared footer component
+async function loadFooter() {
+    const footerPlaceholder = document.getElementById('footer-placeholder');
+    if (footerPlaceholder) {
+        try {
+            // Determine the correct path based on current location
+            const path = window.location.pathname;
+            const footerPath = path === '/' || path.endsWith('index.html')
+                ? './components/footer.html'
+                : '../components/footer.html';
+
+            const response = await fetch(footerPath);
+            const html = await response.text();
+            footerPlaceholder.innerHTML = html;
+        } catch (error) {
+            console.error('Error loading footer:', error);
+        }
+    }
+}
+
+// Load footer when DOM is ready
+loadFooter();
+
 // Smooth scroll for anchor links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -35,6 +58,30 @@ document.querySelectorAll('.testimonial').forEach((el, index) => {
     el.style.transform = 'translateY(30px)';
     el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
     fadeInObserver.observe(el);
+});
+
+// Fade in project cards on scroll
+document.querySelectorAll('.project-card').forEach((el, index) => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = `opacity 0.6s ease ${index * 0.15}s, transform 0.6s ease ${index * 0.15}s`;
+    fadeInObserver.observe(el);
+});
+
+// Handle project card clicks while allowing inner links to work
+document.querySelectorAll('.project-card').forEach(card => {
+    card.addEventListener('click', (e) => {
+        // Don't navigate if clicking on a link
+        if (e.target.tagName === 'A' || e.target.closest('a')) {
+            return;
+        }
+
+        // Get the project URL and open in new tab
+        const url = card.getAttribute('data-href');
+        if (url) {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        }
+    });
 });
 
 // Nav background on scroll
