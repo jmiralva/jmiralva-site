@@ -1,0 +1,12 @@
+# Netlify configuration
+
+[build]
+  publish = "."
+
+# Pretty URLs - Netlify handles this automatically with index.html files in folders
+
+# Optional: Add any redirects here if needed in the future
+# [[redirects]]
+#   from = "/blog/*"
+#   to = "https://blog.jmiralva.me/:splat"
+#   status = 301
