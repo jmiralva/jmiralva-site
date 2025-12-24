@@ -1,5 +1,7 @@
 ---
+import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import headshotImg from '../assets/headshot.jpg';
 ---
 
 <BaseLayout
@@ -17,7 +19,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <p class="hero-beliefs">I'm a firm believer that collaboration is the best path forward, software is awesome, and ice cream is the best dessert.</p>
       </div>
       <div class="hero-image">
-        <img src="/headshot.jpg" alt="Jorge Mir Alvarez" />
+        <Image src={headshotImg} alt="Jorge Mir Alvarez" width={400} height={400} />
       </div>
     </div>
   </main>
