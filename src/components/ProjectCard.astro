@@ -1,0 +1,33 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  url: string;
+  image: string;
+  techLabel?: string;
+  techStack: string;
+}
+
+const {
+  title,
+  description,
+  url,
+  image,
+  techLabel = "How it's built",
+  techStack
+} = Astro.props;
+---
+
+<div class="project-card" data-href={url}>
+  <div class="project-image">
+    <img src={image} alt={`${title} screenshot`}>
+  </div>
+  <div class="project-content">
+    <h3 class="project-title">{title}</h3>
+    <p class="project-description" set:html={description}></p>
+    <div class="project-tech">
+      <span class="tech-label">{techLabel}</span>
+      <p class="tech-stack" set:html={techStack}></p>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+---
+interface Props {
+  quote: string;
+  name: string;
+  nameUrl: string;
+  role: string;
+  className?: string;
+}
+
+const { quote, name, nameUrl, role, className = '' } = Astro.props;
+---
+
+<blockquote class={`testimonial ${className}`}>
+  <p>"{quote}"</p>
+  <footer>
+    <cite class="testimonial-name">
+      <a href={nameUrl} target="_blank" rel="noopener noreferrer">{name}</a>
+    </cite>
+    <span class="testimonial-role">{role}</span>
+  </footer>
+</blockquote>

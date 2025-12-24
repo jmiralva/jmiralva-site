@@ -1,5 +1,30 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const projects = [
+  {
+    title: 'Wanderlust',
+    description: 'An AI travel planner that helps you find the perfect destination for your next trip and discover things to do there.',
+    url: 'https://wnderlust.lovable.app/',
+    image: '/assets/projects/wanderlust-travel-app.png',
+    techStack: 'Built using Lovable and Supabase. Integrates with Unsplash for location images and OpenAI for AI-generated content.'
+  },
+  {
+    title: 'Plates With P\'s Chicago Restaurant Week Guide',
+    description: 'A collaboration with Chicago influencer <a href="https://www.instagram.com/paigeserena/" target="_blank" rel="noopener noreferrer">Paige Serena</a> to identify the best deals for Chicago Restaurant Week 2026.',
+    url: 'https://pwp-chicago-restaurant-week.netlify.app/',
+    image: '/assets/projects/plates-with-p-chicago-restaurant-week-guide.png',
+    techStack: 'Paige built a spreadsheet breaking down the restaurants, and I used Claude Opus to turn it into an app.'
+  },
+  {
+    title: 'Job Tracking Workspace',
+    description: 'A complete job tracking workspace for candidates applying to jobs. Candidates can track job applications, interviews, updates to their processes, from a centralized space. The project is available as pay-what-you-want on Gumroad.',
+    url: 'https://jmiralva.gumroad.com/l/notion-job-search-workspace',
+    image: '/assets/projects/notion-job-search-workspace.png',
+    techStack: 'Built entirely in Notion, and uses the <a href="https://savetonotion.so/" target="_blank" rel="noopener noreferrer">Save to Notion</a> Chrome extension to save job listings to a Notion database.'
+  }
+];
 ---
 
 <BaseLayout
@@ -15,50 +40,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     </div>
 
     <div class="projects-grid">
-      <!-- Project Card 1 -->
-      <div class="project-card" data-href="https://wnderlust.lovable.app/">
-        <div class="project-image">
-          <img src="/assets/projects/wanderlust-travel-app.png" alt="Wanderlust travel app screenshot">
-        </div>
-        <div class="project-content">
-          <h3 class="project-title">Wanderlust</h3>
-          <p class="project-description">An AI travel planner that helps you find the perfect destination for your next trip and discover things to do there.</p>
-          <div class="project-tech">
-            <span class="tech-label">How it's built</span>
-            <p class="tech-stack">Built using Lovable and Supabase. Integrates with Unsplash for location images and OpenAI for AI-generated content.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project Card 2 -->
-      <div class="project-card" data-href="https://pwp-chicago-restaurant-week.netlify.app/">
-        <div class="project-image">
-          <img src="/assets/projects/plates-with-p-chicago-restaurant-week-guide.png" alt="Plates With P's Chicago Restaurant Week Guide screenshot">
-        </div>
-        <div class="project-content">
-          <h3 class="project-title">Plates With P's Chicago Restaurant Week Guide</h3>
-          <p class="project-description">A collaboration with Chicago influencer <a href="https://www.instagram.com/paigeserena/" target="_blank" rel="noopener noreferrer">Paige Serena</a> to identify the best deals for Chicago Restaurant Week 2026.</p>
-          <div class="project-tech">
-            <span class="tech-label">How it's built</span>
-            <p class="tech-stack">Paige built a spreadsheet breaking down the restaurants, and I used Claude Opus to turn it into an app.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- Project Card 3 -->
-      <div class="project-card" data-href="https://jmiralva.gumroad.com/l/notion-job-search-workspace">
-        <div class="project-image">
-          <img src="/assets/projects/notion-job-search-workspace.png" alt="Notion Job Search Tracker Screenshot">
-        </div>
-        <div class="project-content">
-          <h3 class="project-title">Job Tracking Workspace</h3>
-          <p class="project-description">A complete job tracking workspace for candidates applying to jobs. Candidates can track job applications, interviews, updates to their processes, from a centralized space. The project is available as pay-what-you-want on Gumroad.</p>
-          <div class="project-tech">
-            <span class="tech-label">How it's built</span>
-            <p class="tech-stack">Built entirely in Notion, and uses the <a href="https://savetonotion.so/" target="_blank" rel="noopener noreferrer">Save to Notion</a> Chrome extension to save job listings to a Notion database.</p>
-          </div>
-        </div>
-      </div>
+      {projects.map((project) => (
+        <ProjectCard {...project} />
+      ))}
     </div>
   </main>
 
