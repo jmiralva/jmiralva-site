@@ -96,4 +96,31 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       </blockquote>
     </div>
   </main>
+
+  <script slot="scripts" is:inline>
+    // Fade in testimonials on scroll
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.1
+    };
+
+    const fadeInObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+          fadeInObserver.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Apply to testimonials
+    document.querySelectorAll('.testimonial').forEach((el, index) => {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(30px)';
+      el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+      fadeInObserver.observe(el);
+    });
+  </script>
 </BaseLayout>

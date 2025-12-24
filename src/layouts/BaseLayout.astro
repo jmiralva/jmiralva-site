@@ -61,7 +61,6 @@ const {
             <a href="/about">About</a>
             <a href="/projects">Projects</a>
             <a href="/testimonials">Testimonials</a>
-            <a href="/blog">Blog</a>
         </div>
     </nav>
 
@@ -111,6 +110,21 @@ const {
         </div>
     </footer>
 
-    <script src="/script.js" is:inline></script>
+    <!-- Common scripts -->
+    <script is:inline>
+        // Nav background on scroll
+        const nav = document.querySelector('.nav');
+        window.addEventListener('scroll', () => {
+            const currentScroll = window.pageYOffset;
+            if (currentScroll > 100) {
+                nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.08)';
+            } else {
+                nav.style.boxShadow = 'none';
+            }
+        });
+    </script>
+
+    <!-- Page-specific scripts loaded by individual pages -->
+    <slot name="scripts" />
 </body>
 </html>

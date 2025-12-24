@@ -4,101 +4,182 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a static personal portfolio website for Jorge Mir Alvarez, a product manager based in Chicago. The site is deployed on Netlify and consists of three main pages: home, about, and testimonials.
+This is a personal portfolio website for Jorge Mir Alvarez, a product manager based in Chicago. The site is deployed on Netlify and includes pages for home, about, projects, testimonials, and a blog.
 
 ## Tech Stack
 
-- **Frontend**: Vanilla HTML, CSS, and JavaScript (no framework)
-- **Deployment**: Netlify (configured via `netlify.toml`)
+- **Framework**: Astro 5.16+ (static site generator)
+- **Content**: Markdown for blog posts, Astro components for pages
 - **Styling**: Custom CSS with CSS variables, responsive design using media queries
 - **Fonts**: Google Fonts (Instrument Serif, Source Sans 3)
 - **Icons**: Font Awesome 6.5.1
+- **Deployment**: Netlify (configured via `netlify.toml`)
+- **Build**: Node.js (npm) with Astro CLI
 
 ## Site Structure
 
 ```
 /
-├── index.html           # Home page with hero section
-├── about/
-│   └── index.html       # About page with bio and interests
-├── testimonials/
-│   └── index.html       # Testimonials page with colleague quotes
-├── assets/
-│   └── headshot.jpg     # Profile photo
-├── styles.css           # Global styles (shared across all pages)
-├── script.js            # Shared JavaScript functionality
-└── netlify.toml         # Netlify configuration
+├── src/
+│   ├── pages/              # Astro pages (generate routes)
+│   │   ├── index.astro     # Home page
+│   │   ├── about.astro     # About page
+│   │   ├── projects.astro  # Projects page
+│   │   ├── testimonials.astro
+│   │   └── blog/
+│   │       ├── index.astro         # Blog index/listing
+│   │       └── [...slug].astro     # Dynamic blog post route
+│   ├── layouts/
+│   │   ├── BaseLayout.astro    # Shared layout (nav, footer, meta)
+│   │   └── BlogPost.astro      # Blog post layout
+│   └── content/
+│       ├── config.ts           # Content collection schema
+│       └── blog/               # Markdown blog posts
+│           └── *.md
+├── public/                 # Static assets (copied to dist/)
+│   ├── styles.css          # Global stylesheet
+│   ├── script.js           # Client-side JavaScript
+│   ├── headshot.jpg        # Profile photo
+│   └── assets/
+│       ├── favicons/       # Favicon files
+│       └── projects/       # Project screenshots
+├── astro.config.mjs        # Astro configuration
+├── tsconfig.json           # TypeScript configuration
+├── package.json            # Dependencies and scripts
+└── netlify.toml            # Netlify build configuration
 ```
 
 ## Key Architecture Patterns
 
-### URL Structure
-The site uses Netlify's automatic pretty URLs feature. Each section is a folder with an `index.html` file:
-- `/` → `index.html`
-- `/about` → `about/index.html`
-- `/testimonials` → `testimonials/index.html`
+### Astro Pages and Routing
+Astro uses file-based routing in the `src/pages/` directory:
+- `index.astro` → `/`
+- `about.astro` → `/about`
+- `projects.astro` → `/projects`
+- `testimonials.astro` → `/testimonials`
+- `blog/index.astro` → `/blog`
+- `blog/[...slug].astro` → `/blog/{slug}` (dynamic routes for blog posts)
 
-### Shared Resources
-All pages share:
-- `styles.css` - Single global stylesheet with CSS variables for theming
-- `script.js` - Shared JavaScript for smooth scrolling, intersection observer animations, and navigation effects
-- Identical navigation and footer components (duplicated in each HTML file)
+### Shared Layout Component
+All pages use `BaseLayout.astro` which provides:
+- HTML document structure with meta tags
+- Navigation bar with links to all pages
+- Footer with social links
+- Consistent styling and JavaScript includes
+- This eliminates the previous duplication of nav/footer across HTML files
+
+### Blog System
+Blog posts are written in Markdown and stored in `src/content/blog/`:
+- Each post has frontmatter with `title`, `description`, `pubDate`, and optional `heroImage`
+- Posts are rendered using the `BlogPost.astro` layout
+- Blog index automatically lists all posts sorted by date
+- Content collections provide type-safe access to post metadata
 
 ### Design System
-The site uses a cohesive design system defined in CSS variables in `styles.css`:
+The site uses a cohesive design system defined in CSS variables in `public/styles.css`:
 - **Color palette**: Forest green (`#2D6A4F`) as primary accent, cream/beige backgrounds (`#FAF8F2`, `#F0EBE3`)
 - **Typography**: Instrument Serif for headings, Source Sans 3 for body text
-- **Spacing**: Consistent spacing scale using CSS custom properties (`--space-*`)
-- **Layout**: Fixed navigation bar, max-width content containers (`--max-width: 1200px`)
+- **Spacing**: Consistent spacing scale using CSS custom properties
+- **Layout**: Fixed navigation bar, max-width content containers
 
 ### Responsive Design
 The site is fully responsive with breakpoints at:
 - 968px: Switches hero layout from side-by-side to stacked, simplifies testimonials grid
 - 600px: Further reduces spacing and font sizes for mobile
 
-### Animations
-- CSS keyframe animations for hero section fade-in effects
-- JavaScript Intersection Observer for testimonial fade-in on scroll
-- Navigation shadow appears on scroll past 100px
+### Client-Side JavaScript
+JavaScript in `public/script.js` handles:
+- Smooth scrolling for anchor links
+- Intersection Observer for testimonial/project card fade-in animations
+- Navigation shadow on scroll
+- Project card click handling
 
 ## Development Workflow
 
-Since this is a static site with no build process:
+### Local Development
+```bash
+npm install              # Install dependencies (first time only)
+npm run dev              # Start dev server at http://localhost:4321/
+npm run build            # Build for production (output to dist/)
+npm run preview          # Preview production build locally
+```
 
-1. **Local development**: Open `index.html` directly in a browser or use a local server:
-   ```bash
-   python -m http.server 8000
-   # or
-   npx serve .
+### Making Changes
+
+**Updating page content:**
+- Edit the relevant `.astro` file in `src/pages/`
+- Changes are automatically reloaded in dev mode
+
+**Writing blog posts:**
+1. Create a new `.md` file in `src/content/blog/`
+2. Add frontmatter:
+   ```markdown
+   ---
+   title: 'Post Title'
+   description: 'Brief description'
+   pubDate: 2025-12-23
+   heroImage: '/path/to/image.jpg'  # optional
+   ---
+
+   Your markdown content here...
    ```
+3. Save and the post will appear on the blog index
 
-2. **Making changes**: Edit HTML, CSS, or JS files directly and refresh the browser
+**Modifying shared layout:**
+- Edit `src/layouts/BaseLayout.astro` to change nav, footer, or meta tags
+- Changes apply to all pages automatically
 
-3. **Deployment**: Netlify automatically deploys from the git repository. The publish directory is `.` (root).
+**Styling:**
+- Edit `public/styles.css` for global styles
+- Add component-specific styles using `<style>` tags in `.astro` files
+
+### Deployment
+Netlify automatically builds and deploys when pushing to the main branch:
+1. Runs `npm run build` (configured in `netlify.toml`)
+2. Publishes the `dist/` directory
+3. Site is live at https://jmiralva.me
 
 ## Common Modifications
 
-### Updating Content
-- **Personal info**: Edit text directly in the relevant HTML file
-- **Social links**: Update the `.social-links` section in the footer (duplicated in all three HTML files)
-- **Testimonials**: Add new `<blockquote>` elements in `testimonials/index.html` with appropriate grid classes (`.testimonial-N`)
+### Adding a New Page
+1. Create `src/pages/pagename.astro`
+2. Import and use `BaseLayout`:
+   ```astro
+   ---
+   import BaseLayout from '../layouts/BaseLayout.astro';
+   ---
 
-### Styling Changes
-All styling is centralized in `styles.css`. Key sections:
-- Line 4-29: CSS variables for colors, fonts, and spacing
-- Line 72-118: Navigation styles
-- Line 136-214: Hero section
-- Line 297-377: Testimonials grid layout
+   <BaseLayout title="Page Title" description="Description">
+     <main>
+       <!-- Your content -->
+     </main>
+   </BaseLayout>
+   ```
+3. Add navigation link to `BaseLayout.astro` if needed
 
-### Adding New Pages
-1. Create a new folder with an `index.html` file
-2. Copy navigation and footer from existing pages
-3. Update relative paths for `styles.css` and `script.js` (use `../` as needed)
-4. Add navigation link to all existing pages
+### Updating Navigation
+- Edit the `.nav-links` section in `src/layouts/BaseLayout.astro`
+- Changes automatically apply to all pages
+
+### Updating Social Links
+- Edit the `.social-links` section in `src/layouts/BaseLayout.astro`
+- Changes automatically apply to all pages
+
+### Adding Project Cards
+- Edit `src/pages/projects.astro`
+- Add new project images to `public/assets/projects/`
+- Follow the existing card structure
+
+### Updating Testimonials
+- Edit `src/pages/testimonials.astro`
+- Add new `<blockquote>` elements with appropriate classes
 
 ## Important Notes
 
-- **No build process**: This is a static site with no compilation, bundling, or preprocessing
-- **Duplicated components**: Navigation and footer are copy-pasted across all three HTML files. Changes must be made in all locations.
-- **External dependencies**: Font Awesome and Google Fonts are loaded from CDNs
-- **Git**: Single branch with clean commits; site is the repository name (`jmiralva`)
+- **Build process**: This is now an Astro site with a build step (not a static HTML site)
+- **No component duplication**: Navigation and footer are defined once in `BaseLayout.astro`
+- **Content collections**: Blog posts use Astro's content collections for type safety
+- **Markdown support**: Blog posts are written in Markdown with frontmatter
+- **Static output**: Despite using Astro, the site is fully static (no server-side rendering)
+- **Dependencies**: Managed via npm; keep `package.json` and `package-lock.json` in sync
+- **Git**: Single branch (`main`) with clean commits
