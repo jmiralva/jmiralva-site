@@ -1,7 +1,8 @@
 # Netlify configuration
 
 [build]
-  publish = "."
+  command = "npm run build"
+  publish = "dist"
 
 # Pretty URLs - Netlify handles this automatically with index.html files in folders
 
