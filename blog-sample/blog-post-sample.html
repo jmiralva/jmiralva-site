@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>What home cooking taught me about product strategy | Jorge Mir Alvarez</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-primary: #2D6A4F;
+      --color-primary-light: #40916C;
+      --color-bg: #FAF8F2;
+      --color-bg-warm: #F0EBE3;
+      --color-text: #1a1a1a;
+      --color-text-muted: #6b6b6b;
+      --color-text-light: #999;
+      --color-border: #e0ddd5;
+      --font-serif: 'Instrument Serif', Georgia, serif;
+      --font-sans: 'Source Sans 3', -apple-system, sans-serif;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--color-bg);
+      color: var(--color-text);
+      line-height: 1.6;
+    }
+
+    /* ========================================
+       PAGE LAYOUT
+       ======================================== */
+    .page-wrapper {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+    }
+
+    /* ========================================
+       POST HEADER
+       ======================================== */
+    .post-header {
+      margin-bottom: 3rem;
+    }
+
+    .post-header .back-link {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 2rem;
+      transition: color 0.2s ease;
+    }
+
+    .post-header .back-link:hover {
+      color: var(--color-primary);
+    }
+
+    .post-header .back-link svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    .post-header h1 {
+      font-family: var(--font-serif);
+      font-size: 2.5rem;
+      font-weight: 400;
+      color: var(--color-text);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+
+    .post-meta {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      color: var(--color-text-light);
+    }
+
+    /* ========================================
+       POST CONTENT - PROSE
+       ======================================== */
+    .post-content {
+      font-family: var(--font-sans);
+      font-size: 1.1rem;
+      line-height: 1.75;
+      color: var(--color-text);
+    }
+
+    .post-content p {
+      margin-bottom: 1.5rem;
+    }
+
+    .post-content h2 {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      font-weight: 400;
+      color: var(--color-text);
+      margin-top: 2.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .post-content h3 {
+      font-family: var(--font-serif);
+      font-size: 1.3rem;
+      font-weight: 400;
+      color: var(--color-text);
+      margin-top: 2rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .post-content a {
+      color: var(--color-primary);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: color 0.2s ease;
+    }
+
+    .post-content a:hover {
+      color: var(--color-primary-light);
+    }
+
+    .post-content strong {
+      font-weight: 600;
+    }
+
+    .post-content em {
+      font-style: italic;
+    }
+
+    .post-content ul,
+    .post-content ol {
+      margin-bottom: 1.5rem;
+      padding-left: 1.5rem;
+    }
+
+    .post-content li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* ========================================
+       BLOCKQUOTE - Prominent style
+       ======================================== */
+    .post-content blockquote {
+      margin: 2.5rem 0;
+      padding: 1.5rem 0 1.5rem 1.75rem;
+      border-left: 4px solid var(--color-primary);
+      background: linear-gradient(to right, rgba(45, 106, 79, 0.04), transparent);
+    }
+
+    .post-content blockquote p {
+      font-family: var(--font-serif);
+      font-size: 1.35rem;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--color-text);
+      margin-bottom: 0;
+    }
+
+    .post-content blockquote cite,
+    .post-content blockquote footer {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      font-style: normal;
+      color: var(--color-text-muted);
+      margin-top: 0.75rem;
+    }
+
+    .post-content blockquote cite::before,
+    .post-content blockquote footer::before {
+      content: '— ';
+    }
+
+    /* ========================================
+       IMAGES & CAPTIONS
+       ======================================== */
+    .post-content figure {
+      margin: 2.5rem 0;
+    }
+
+    .post-content figure img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      display: block;
+    }
+
+    .post-content figure figcaption {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      margin-top: 0.75rem;
+      line-height: 1.5;
+    }
+
+    /* Stand-alone images (without figure wrapper) */
+    .post-content img {
+      width: 100%;
+      height: auto;
+      border-radius: 4px;
+      margin: 2rem 0;
+    }
+
+    /* ========================================
+       EMBEDDED VIDEO
+       ======================================== */
+    .post-content .video-embed {
+      margin: 2.5rem 0;
+      position: relative;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      height: 0;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+
+    .post-content .video-embed iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+      border-radius: 4px;
+    }
+
+    .post-content .video-caption {
+      font-family: var(--font-sans);
+      font-size: 0.85rem;
+      color: var(--color-text-muted);
+      margin-top: 0.75rem;
+      line-height: 1.5;
+    }
+
+    /* ========================================
+       POST FOOTER
+       ======================================== */
+    .post-footer {
+      margin-top: 4rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--color-border);
+    }
+
+    .post-footer .back-link {
+      font-family: var(--font-sans);
+      font-size: 0.9rem;
+      color: var(--color-primary);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: color 0.2s ease;
+    }
+
+    .post-footer .back-link:hover {
+      color: var(--color-primary-light);
+    }
+
+    .post-footer .back-link svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* ========================================
+       RESPONSIVE
+       ======================================== */
+    @media (max-width: 600px) {
+      .page-wrapper {
+        padding: 2rem 1.25rem;
+      }
+
+      .post-header h1 {
+        font-size: 2rem;
+      }
+
+      .post-content {
+        font-size: 1rem;
+      }
+
+      .post-content h2 {
+        font-size: 1.4rem;
+      }
+
+      .post-content blockquote {
+        padding-left: 1.25rem;
+        margin: 2rem 0;
+      }
+
+      .post-content blockquote p {
+        font-size: 1.15rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+    
+    <header class="post-header">
+      <a href="#" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back to blog
+      </a>
+      <h1>What home cooking taught me about product strategy</h1>
+      <div class="post-meta">December 15, 2025</div>
+    </header>
+
+    <article class="post-content">
+      <p>There's a French culinary term that changed how I think about building products: <em>mise en place</em>. It translates roughly to "everything in its place," and it's the practice of preparing and organizing all your ingredients before you start cooking.</p>
+
+      <p>I started taking cooking seriously about three years ago. Not restaurant-serious, but serious enough to attempt a beef bourguignon on a Tuesday night. What struck me wasn't the complexity of the recipes—it was how much the preparation mattered.</p>
+
+      <figure>
+        <img src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=1200&q=80" alt="Ingredients laid out on a wooden cutting board, organized and ready for cooking">
+        <figcaption>Mise en place in action: everything prepped, measured, and ready before the heat goes on.</figcaption>
+      </figure>
+
+      <h2>The prep is the work</h2>
+
+      <p>When you watch professional chefs, they rarely scramble. The onions are already diced. The garlic is minced. The spices are measured into tiny bowls. By the time the pan is hot, all that's left is execution.</p>
+
+      <p>Product development, at its best, works the same way. The discovery phase—user research, competitive analysis, technical feasibility—is our mise en place. Skip it, and you'll find yourself scrambling mid-sprint, trying to chop onions while the butter burns.</p>
+
+      <blockquote>
+        <p>The time you spend preparing is never wasted. It's the foundation that makes everything else possible.</p>
+        <footer>Jacques Pépin</footer>
+      </blockquote>
+
+      <p>I've seen teams rush into building because shipping feels more productive than planning. But shipping the wrong thing isn't productive—it's expensive. Every hour spent in discovery saves ten hours of rework later.</p>
+
+      <h2>Taste as you go</h2>
+
+      <p>The other thing cooking teaches you is iteration. You don't season a dish once and hope for the best. You taste, adjust, taste again. You add a pinch of salt, a squeeze of lemon, a crack of pepper—building up layers of flavor through small, continuous adjustments.</p>
+
+      <p>This is why I'm such a believer in early and frequent user feedback. A prototype in front of a user is like tasting the sauce mid-cook. You might discover it needs more acid, or that the portion size is wrong, or that nobody actually wants bouillabaisse in the first place.</p>
+
+      <figure>
+        <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=1200&q=80" alt="A chef tasting from a wooden spoon over a steaming pot">
+        <figcaption>The feedback loop: taste, adjust, repeat.</figcaption>
+      </figure>
+
+      <h2>Simple ingredients, prepared well</h2>
+
+      <p>The best meals I've made aren't the most complex ones. They're the ones where I found great ingredients and didn't get in the way. A perfect tomato needs nothing but salt and olive oil. A good steak just needs heat and time.</p>
+
+      <p>Products work the same way. The features that users love most are often the simplest—the ones that solve a real problem without unnecessary complexity. We get into trouble when we over-engineer, when we add seventeen settings to something that should just work.</p>
+
+      <blockquote>
+        <p>Perfection is achieved not when there is nothing more to add, but when there is nothing left to take away.</p>
+        <footer>Antoine de Saint-Exupéry</footer>
+      </blockquote>
+
+      <p>The next time you're tempted to add another feature, ask yourself: is this the culinary equivalent of truffle oil? Sometimes it elevates the dish. Often, it just masks what's underneath.</p>
+
+      <h2>A recipe worth sharing</h2>
+
+      <p>I'll leave you with a short video that captures this philosophy better than I can. It's from a documentary about Jiro Ono, the legendary sushi chef. Watch how he talks about rice—the simplest ingredient, prepared with decades of attention.</p>
+
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/I1UDS2kgqY8" title="Jiro Dreams of Sushi - Rice Scene" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+      <p class="video-caption">From "Jiro Dreams of Sushi" (2011) — a masterclass in simplicity and dedication.</p>
+
+      <p>Whether you're building software or building a meal, the principles are the same: prepare thoroughly, iterate constantly, and respect the ingredients. The rest is just execution.</p>
+    </article>
+
+    <footer class="post-footer">
+      <a href="#" class="back-link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="19" y1="12" x2="5" y2="12"></line>
+          <polyline points="12 19 5 12 12 5"></polyline>
+        </svg>
+        Back to blog
+      </a>
+    </footer>
+
+  </div>
+</body>
+</html>

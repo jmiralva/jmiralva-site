@@ -5,6 +5,27 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 const posts = (await getCollection('blog')).sort(
   (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
 );
+
+const latestPost = posts[0];
+const olderPosts = posts.slice(1);
+
+// Helper function to format date for featured post (December 20, 2025)
+function formatLongDate(date: Date) {
+  return new Date(date).toLocaleDateString('en-us', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+}
+
+// Helper function to format date for list (Dec 15, 2025)
+function formatShortDate(date: Date) {
+  return new Date(date).toLocaleDateString('en-us', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  });
+}
 ---
 
 <BaseLayout
@@ -12,140 +33,45 @@ const posts = (await getCollection('blog')).sort(
   description="Thoughts and musings on product management, technology, and more."
   canonicalURL="https://jmiralva.me/blog"
 >
-  <main class="blog-index">
-    <div class="blog-index-header">
+  <div class="blog-page-wrapper">
+
+    <header class="blog-header">
       <span class="section-label">Blog</span>
       <h1>Thoughts and musings</h1>
-      <p class="blog-index-subtitle">Reflections on product management, technology, and whatever else is on my mind.</p>
-    </div>
+      <p class="subtitle">Reflections on product management, technology, and whatever else is on my mind.</p>
+    </header>
 
-    <div class="blog-posts">
-      {posts.length === 0 ? (
-        <p class="blog-empty">No posts yet. Check back soon!</p>
-      ) : (
-        posts.map((post) => (
-          <article class="blog-post-card">
-            <a href={`/blog/${post.slug}`}>
-              {post.data.heroImage && (
-                <div class="blog-post-card-image">
-                  <img src={post.data.heroImage} alt={post.data.title} />
-                </div>
-              )}
-              <div class="blog-post-card-content">
-                <h2>{post.data.title}</h2>
-                <p class="blog-post-card-description">{post.data.description}</p>
-                <time datetime={post.data.pubDate.toISOString()}>
-                  {new Date(post.data.pubDate).toLocaleDateString('en-us', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric',
-                  })}
-                </time>
-              </div>
-            </a>
-          </article>
-        ))
-      )}
-    </div>
-  </main>
+    {posts.length === 0 ? (
+      <p style="text-align: center; color: var(--color-text-muted); padding: 3rem 1rem;">
+        No posts yet. Check back soon!
+      </p>
+    ) : (
+      <>
+        {latestPost && (
+          <a href={`/blog/${latestPost.slug}`} class="featured-post">
+            <span class="featured-label">Latest</span>
+            <span class="post-title">{latestPost.data.title}</span>
+            <div class="featured-meta">
+              <span>{formatLongDate(latestPost.data.pubDate)}</span>
+            </div>
+            <p class="featured-summary">{latestPost.data.description}</p>
+          </a>
+        )}
+
+        {olderPosts.length > 0 && (
+          <ul class="post-list">
+            {olderPosts.map((post) => (
+              <li class="post-item">
+                <a href={`/blog/${post.slug}`}>
+                  <span class="post-date">{formatShortDate(post.data.pubDate)}</span>
+                  <span class="post-title">{post.data.title}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </>
+    )}
+
+  </div>
 </BaseLayout>
-
-<style>
-  .blog-index {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 120px 2rem 4rem;
-  }
-
-  .blog-index-header {
-    margin-bottom: 3rem;
-  }
-
-  .blog-index-subtitle {
-    font-size: 1.125rem;
-    color: var(--text-muted);
-    margin-top: 1rem;
-  }
-
-  .blog-posts {
-    display: grid;
-    gap: 2rem;
-  }
-
-  .blog-empty {
-    text-align: center;
-    color: var(--text-muted);
-    padding: 3rem 1rem;
-    font-size: 1.125rem;
-  }
-
-  .blog-post-card {
-    border-radius: 12px;
-    overflow: hidden;
-    background: var(--bg-secondary);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-
-  .blog-post-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  }
-
-  .blog-post-card a {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
-
-  .blog-post-card-image {
-    width: 100%;
-    height: 250px;
-    overflow: hidden;
-  }
-
-  .blog-post-card-image img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-  }
-
-  .blog-post-card:hover .blog-post-card-image img {
-    transform: scale(1.05);
-  }
-
-  .blog-post-card-content {
-    padding: 1.5rem;
-  }
-
-  .blog-post-card h2 {
-    margin-bottom: 0.75rem;
-    color: var(--primary);
-    font-size: 1.5rem;
-  }
-
-  .blog-post-card-description {
-    color: var(--text-muted);
-    margin-bottom: 1rem;
-    line-height: 1.6;
-  }
-
-  .blog-post-card time {
-    color: var(--text-muted);
-    font-size: 0.9rem;
-  }
-
-  @media (max-width: 768px) {
-    .blog-index {
-      padding: 100px 1.5rem 3rem;
-    }
-
-    .blog-post-card-image {
-      height: 200px;
-    }
-
-    .blog-post-card h2 {
-      font-size: 1.25rem;
-    }
-  }
-</style>
