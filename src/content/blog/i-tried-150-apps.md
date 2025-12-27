@@ -1,5 +1,5 @@
 ---
-title: 'I Tried 150 Apps to Stay Relevant as a Product Manager'
+title: 'I tried 150 Apps to stay relevant as a product manager'
 description: ''
 pubDate: 2020-02-07
 ---
