@@ -16,9 +16,46 @@ const formattedPubDate = new Date(pubDate).toLocaleDateString('en-us', {
   month: 'long',
   day: 'numeric',
 });
+
+// Generate canonical URL and OG image for this blog post
+const slug = Astro.url.pathname.split('/').filter(Boolean).pop();
+const canonicalURL = `https://jmiralva.me/blog/${slug}`;
+const ogImage = heroImage || 'https://jmiralva.me/assets/headshot.jpg';
 ---
 
-<BaseLayout title={`${title} | Jorge Mir Alvarez`} description={description}>
+<BaseLayout
+  title={`${title} | Jorge Mir Alvarez`}
+  description={description}
+  canonicalURL={canonicalURL}
+  ogImage={ogImage}
+  ogType="article"
+  publishedTime={pubDate}
+  modifiedTime={updatedDate}
+>
+  <!-- Structured Data: BlogPosting Schema -->
+  <script type="application/ld+json" slot="head" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": title,
+    "description": description,
+    "image": ogImage,
+    "datePublished": pubDate.toISOString(),
+    "dateModified": (updatedDate || pubDate).toISOString(),
+    "author": {
+      "@type": "Person",
+      "name": "Jorge Mir Alvarez",
+      "url": "https://jmiralva.me"
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": "Jorge Mir Alvarez"
+    },
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": canonicalURL
+    }
+  })} />
+
   <div class="blog-post-wrapper">
 
     <header class="post-header">
