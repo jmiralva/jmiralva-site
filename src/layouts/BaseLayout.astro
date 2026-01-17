@@ -95,38 +95,31 @@ const {
             <p class="connect-tagline">Call me beep me if you want to reach me.</p>
 
             <div class="social-links">
-                <a href="mailto:jorge@jmiralva.me" class="social-link">
+                <a href="mailto:jorge@jmiralva.me" class="social-link" aria-label="Email">
                     <i class="fa-solid fa-envelope"></i>
-                    <span>Email</span>
                 </a>
-                <a href="https://www.linkedin.com/in/jmiralva/" target="_blank" rel="noopener" class="social-link">
+                <a href="https://www.linkedin.com/in/jmiralva/" target="_blank" rel="noopener" class="social-link" aria-label="LinkedIn">
                     <i class="fa-brands fa-linkedin-in"></i>
-                    <span>LinkedIn</span>
                 </a>
-                <a href="https://twitter.com/jmiralva" target="_blank" rel="noopener" class="social-link">
+                <a href="https://twitter.com/jmiralva" target="_blank" rel="noopener" class="social-link" aria-label="Twitter">
                     <i class="fa-brands fa-x-twitter"></i>
-                    <span>Twitter</span>
                 </a>
-                <a href="https://www.instagram.com/jmiralva/" target="_blank" rel="noopener" class="social-link">
+                <a href="https://www.instagram.com/jmiralva/" target="_blank" rel="noopener" class="social-link" aria-label="Instagram">
                     <i class="fa-brands fa-instagram"></i>
-                    <span>Instagram</span>
                 </a>
-                <a href="https://bandcamp.com/jmiralva" target="_blank" rel="noopener" class="social-link">
+                <a href="https://bandcamp.com/jmiralva" target="_blank" rel="noopener" class="social-link" aria-label="Bandcamp">
                     <i class="fa-brands fa-bandcamp"></i>
-                    <span>Bandcamp</span>
                 </a>
-                <a href="https://www.goodreads.com/user/show/80876056-jorge-mir-alvarez" target="_blank" rel="noopener" class="social-link">
+                <a href="https://www.goodreads.com/user/show/80876056-jorge-mir-alvarez" target="_blank" rel="noopener" class="social-link" aria-label="Goodreads">
                     <i class="fa-brands fa-goodreads-g"></i>
-                    <span>Goodreads</span>
                 </a>
-                <a href="https://music.apple.com/profile/jmiralva" target="_blank" rel="noopener" class="social-link">
+                <a href="https://music.apple.com/profile/jmiralva" target="_blank" rel="noopener" class="social-link" aria-label="Apple Music">
                     <i class="fa-brands fa-apple"></i>
-                    <span>Apple Music</span>
                 </a>
             </div>
         </div>
         <div class="footer-bottom">
-            <p>© 2025 Jorge Mir Alvarez</p>
+            <p>© {new Date().getFullYear()} Jorge Mir Alvarez</p>
         </div>
     </footer>
 
@@ -141,6 +134,22 @@ const {
             } else {
                 nav.style.boxShadow = 'none';
             }
+        });
+
+        // Magnetic Social Buttons
+        document.querySelectorAll('.social-link').forEach(button => {
+            button.addEventListener('mousemove', (e) => {
+                const rect = button.getBoundingClientRect();
+                const x = e.clientX - rect.left - rect.width / 2;
+                const y = e.clientY - rect.top - rect.height / 2;
+                const moveX = x * 0.35;
+                const moveY = y * 0.35;
+                button.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.1)`;
+            });
+
+            button.addEventListener('mouseleave', () => {
+                button.style.transform = 'translate(0, 0) scale(1)';
+            });
         });
     </script>
 

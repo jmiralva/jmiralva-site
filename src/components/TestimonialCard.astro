@@ -10,7 +10,7 @@ interface Props {
 const { quote, name, nameUrl, role, className = '' } = Astro.props;
 ---
 
-<blockquote class={`testimonial ${className}`}>
+<blockquote class={`testimonial ${className} draggable`}>
   <p>"{quote}"</p>
   <footer>
     <cite class="testimonial-name">

@@ -10,6 +10,7 @@ interface Props {
   altText: string;
   techLabel?: string;
   techStack: string;
+  index: number;
 }
 
 const {
@@ -19,11 +20,14 @@ const {
   image,
   altText,
   techLabel = "How it's built",
-  techStack
+  techStack,
+  index
 } = Astro.props;
+
+const imageOnBottom = index % 2 === 1;  // Odd cards: image on bottom
 ---
 
-<div class="project-card" data-href={url}>
+<div class={`project-card ${imageOnBottom ? 'image-bottom' : 'image-top'}`} data-href={url}>
   <div class="project-image">
     <Image src={image} alt={altText} width={800} height={600} />
   </div>

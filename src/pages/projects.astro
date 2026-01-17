@@ -46,8 +46,8 @@ const projects = [
     </div>
 
     <div class="projects-grid">
-      {projects.map((project) => (
-        <ProjectCard {...project} />
+      {projects.map((project, index) => (
+        <ProjectCard {...project} index={index} />
       ))}
     </div>
   </main>

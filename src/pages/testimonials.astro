@@ -120,5 +120,87 @@ const testimonials = [
       el.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
       fadeInObserver.observe(el);
     });
+
+    // Draggable Testimonials
+    class DraggableTestimonial {
+      constructor(element, container) {
+        this.element = element;
+        this.container = container;
+        this.isDragging = false;
+        this.currentX = 0;
+        this.currentY = 0;
+        this.initialX = 0;
+        this.initialY = 0;
+        this.xOffset = 0;
+        this.yOffset = 0;
+        this.rotation = 0;
+
+        // Get initial rotation from computed style if exists
+        const transform = window.getComputedStyle(this.element).transform;
+        if (transform !== 'none') {
+          const values = transform.split('(')[1].split(')')[0].split(',');
+          const angle = Math.round(Math.atan2(values[1], values[0]) * (180/Math.PI));
+          this.rotation = angle;
+        }
+
+        this.element.addEventListener('mousedown', this.dragStart.bind(this));
+        document.addEventListener('mousemove', this.drag.bind(this));
+        document.addEventListener('mouseup', this.dragEnd.bind(this));
+
+        // Touch events for mobile
+        this.element.addEventListener('touchstart', this.dragStart.bind(this));
+        document.addEventListener('touchmove', this.drag.bind(this));
+        document.addEventListener('touchend', this.dragEnd.bind(this));
+      }
+
+      dragStart(e) {
+        if (e.type === 'touchstart') {
+          this.initialX = e.touches[0].clientX - this.xOffset;
+          this.initialY = e.touches[0].clientY - this.yOffset;
+        } else {
+          this.initialX = e.clientX - this.xOffset;
+          this.initialY = e.clientY - this.yOffset;
+        }
+
+        if (e.target === this.element || this.element.contains(e.target)) {
+          this.isDragging = true;
+          this.element.classList.add('dragging');
+        }
+      }
+
+      drag(e) {
+        if (this.isDragging) {
+          e.preventDefault();
+
+          if (e.type === 'touchmove') {
+            this.currentX = e.touches[0].clientX - this.initialX;
+            this.currentY = e.touches[0].clientY - this.initialY;
+          } else {
+            this.currentX = e.clientX - this.initialX;
+            this.currentY = e.clientY - this.initialY;
+          }
+
+          this.xOffset = this.currentX;
+          this.yOffset = this.currentY;
+
+          this.setTranslate(this.currentX, this.currentY);
+        }
+      }
+
+      dragEnd() {
+        this.isDragging = false;
+        this.element.classList.remove('dragging');
+      }
+
+      setTranslate(xPos, yPos) {
+        this.element.style.transform = `translate(${xPos}px, ${yPos}px) rotate(${this.rotation}deg)`;
+      }
+    }
+
+    // Initialize all draggable testimonials
+    const testimonialsContainer = document.querySelector('.testimonials-grid');
+    document.querySelectorAll('.draggable').forEach(testimonial => {
+      new DraggableTestimonial(testimonial, testimonialsContainer);
+    });
   </script>
 </BaseLayout>
