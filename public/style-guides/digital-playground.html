@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Playground - Style Guide</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="assets/digital.css">
+</head>
+<body>
+  <!-- Animated Background Orbs -->
+  <div class="bg-orbs">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="header-content">
+      <div class="logo">DIGITAL</div>
+      <nav>
+        <a href="#colors">Colors</a>
+        <a href="#typography">Type</a>
+        <a href="#bubbles">Bubbles</a>
+        <a href="#cards">Cards</a>
+        <a href="#buttons">Buttons</a>
+        <a href="#layouts">Layouts</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Digital Playground</h1>
+      <p class="subtitle">Bold, energetic design with vibrant interactions</p>
+      <span class="code-label">// Curated Chaos</span>
+    </div>
+  </section>
+
+  <!-- Color Palette -->
+  <section id="colors">
+    <h2>Color System</h2>
+    <div class="color-showcase">
+      <div class="color-card">
+        <div class="color-preview" style="background: #6366F1;"></div>
+        <div class="color-info">
+          <h3>Electric Indigo</h3>
+          <code>#6366F1</code>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-preview" style="background: #EC4899;"></div>
+        <div class="color-info">
+          <h3>Hot Pink</h3>
+          <code>#EC4899</code>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-preview" style="background: #FBBF24;"></div>
+        <div class="color-info">
+          <h3>Bright Yellow</h3>
+          <code>#FBBF24</code>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-preview" style="background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%);"></div>
+        <div class="color-info">
+          <h3>Primary Gradient</h3>
+          <code>Indigo → Pink</code>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-preview" style="background: linear-gradient(135deg, #FBBF24 0%, #EC4899 100%);"></div>
+        <div class="color-info">
+          <h3>Secondary Gradient</h3>
+          <code>Yellow → Pink</code>
+        </div>
+      </div>
+      <div class="color-card">
+        <div class="color-preview" style="background: linear-gradient(135deg, #6366F1 0%, #FBBF24 100%);"></div>
+        <div class="color-info">
+          <h3>Accent Gradient</h3>
+          <code>Indigo → Yellow</code>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Typography -->
+  <section id="typography">
+    <h2>Typography</h2>
+    <div class="type-showcase">
+      <div class="type-demo">
+        <div class="label">Display / Space Grotesk</div>
+        <div class="gradient-text">Bold & Energetic</div>
+      </div>
+      <div class="type-demo">
+        <div class="label">Body / Manrope</div>
+        <div class="body-text">
+          Manrope provides a friendly, rounded sans-serif for body text that maintains
+          readability while complementing the bold display typography. Its geometric
+          construction feels modern and approachable.
+        </div>
+      </div>
+      <div class="type-demo">
+        <div class="label">Code / JetBrains Mono</div>
+        <div class="code-text">const design = "vibrant && intentional";</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Draggable Bubbles -->
+  <section id="bubbles">
+    <h2>Interactive Bubbles</h2>
+    <div class="bubbles-container" id="bubblesContainer">
+      <div class="bubble-instruction">// Drag these around!</div>
+      <div class="bubble draggable-bubble" style="background: linear-gradient(135deg, #6366F1 0%, #A5B4FC 100%); top: 60px; left: 50px;">Design</div>
+      <div class="bubble draggable-bubble" style="background: linear-gradient(135deg, #EC4899 0%, #F9A8D4 100%); top: 80px; left: 250px;">Development</div>
+      <div class="bubble draggable-bubble" style="background: linear-gradient(135deg, #FBBF24 0%, #FDE68A 100%); top: 100px; left: 500px;">Strategy</div>
+      <div class="bubble draggable-bubble" style="background: linear-gradient(135deg, #6366F1 0%, #EC4899 100%); top: 180px; left: 150px;">Animation</div>
+      <div class="bubble draggable-bubble" style="background: linear-gradient(135deg, #FBBF24 0%, #EC4899 100%); top: 200px; left: 700px;">Interaction</div>
+      <div class="bubble draggable-bubble" style="background: linear-gradient(135deg, #6366F1 0%, #FBBF24 100%); top: 280px; left: 400px;">Typography</div>
+      <div class="bubble draggable-bubble" style="background: linear-gradient(135deg, #EC4899 0%, #6366F1 100%); top: 300px; left: 100px;">Color</div>
+    </div>
+  </section>
+
+  <!-- 3D Tilt Card -->
+  <section id="cards">
+    <h2>3D Tilt Effect</h2>
+    <div class="tilt-card-container">
+      <div class="tilt-card" id="tiltCard">
+        <div class="tilt-card-content">
+          <h3>Interactive Card</h3>
+          <p style="color: var(--neutral-gray); line-height: 1.8;">
+            Move your mouse over this card to experience the 3D tilt effect.
+            The card responds to your cursor position with smooth, perspective-aware transformations.
+          </p>
+          <div style="margin-top: var(--space-lg); padding: var(--space-md); background: linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%); border-radius: var(--radius-md);">
+            <code style="font-family: 'JetBrains Mono', monospace; font-size: var(--text-sm); color: var(--electric-indigo);">
+              transform: perspective(1000px)
+            </code>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Magnetic Buttons -->
+  <section id="buttons">
+    <h2>Magnetic Buttons</h2>
+    <div class="magnetic-buttons">
+      <button class="magnetic-btn">Primary Action</button>
+      <button class="magnetic-btn secondary">Secondary</button>
+      <button class="magnetic-btn outline">Outline Style</button>
+    </div>
+  </section>
+
+  <!-- Bento Grid Layout -->
+  <section id="layouts">
+    <h2>Bento Box Layout</h2>
+    <div class="bento-grid">
+      <div class="bento-item">
+        <div class="bento-item-content">
+          <h4>Wide Feature</h4>
+          <p>Spanning 8 columns for primary content</p>
+        </div>
+      </div>
+      <div class="bento-item">
+        <div class="bento-item-content">
+          <h4>Side Panel</h4>
+          <p>4 columns</p>
+        </div>
+      </div>
+      <div class="bento-item">
+        <div class="bento-item-content">
+          <h4>Asymmetric</h4>
+          <p>5 column span</p>
+        </div>
+      </div>
+      <div class="bento-item">
+        <div class="bento-item-content">
+          <h4>Balanced</h4>
+          <p>7 column complement</p>
+        </div>
+      </div>
+      <div class="bento-item">
+        <div class="bento-item-content">
+          <h4>Full Width Hero</h4>
+          <p>12 columns for maximum impact and visual hierarchy</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Flip Cards -->
+  <section>
+    <h2>Flip Card Interaction</h2>
+    <div class="flip-cards-container">
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <h4>Front Side</h4>
+            <p style="color: var(--neutral-gray); margin-top: var(--space-md);">
+              Click to reveal more information
+            </p>
+            <p class="flip-hint">👆 Click me</p>
+          </div>
+          <div class="flip-card-back">
+            <h3 style="color: white; font-family: 'Space Grotesk', sans-serif; margin-bottom: var(--space-md);">Back Side</h3>
+            <p style="opacity: 0.9;">
+              This card flips to reveal hidden content with a smooth 3D rotation effect.
+              Perfect for progressive disclosure.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <h4>Interactive</h4>
+            <p style="color: var(--neutral-gray); margin-top: var(--space-md);">
+              Discover what's on the other side
+            </p>
+            <p class="flip-hint">👆 Click me</p>
+          </div>
+          <div class="flip-card-back">
+            <h3 style="color: white; font-family: 'Space Grotesk', sans-serif; margin-bottom: var(--space-md);">Details</h3>
+            <p style="opacity: 0.9;">
+              Use flip cards to create engaging micro-interactions that reward user curiosity.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flip-card" onclick="this.classList.toggle('flipped')">
+        <div class="flip-card-inner">
+          <div class="flip-card-front">
+            <h4>Engaging</h4>
+            <p style="color: var(--neutral-gray); margin-top: var(--space-md);">
+              Experience the transition
+            </p>
+            <p class="flip-hint">👆 Click me</p>
+          </div>
+          <div class="flip-card-back">
+            <h3 style="color: white; font-family: 'Space Grotesk', sans-serif; margin-bottom: var(--space-md);">Hidden Info</h3>
+            <p style="opacity: 0.9;">
+              The 3D flip effect adds depth and delight to the user experience.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <h3>Digital Playground</h3>
+    <p>Bold design with energetic interactions // Vibrant but intentional</p>
+  </footer>
+
+  <!-- JavaScript -->
+  <script>
+    // Draggable Bubbles with Boundary Constraints
+    class DraggableBubble {
+      constructor(element, container) {
+        this.element = element;
+        this.container = container;
+        this.isDragging = false;
+        this.currentX = 0;
+        this.currentY = 0;
+        this.initialX = 0;
+        this.initialY = 0;
+        this.xOffset = 0;
+        this.yOffset = 0;
+
+        this.element.addEventListener('mousedown', this.dragStart.bind(this));
+        document.addEventListener('mousemove', this.drag.bind(this));
+        document.addEventListener('mouseup', this.dragEnd.bind(this));
+
+        // Touch events
+        this.element.addEventListener('touchstart', this.dragStart.bind(this));
+        document.addEventListener('touchmove', this.drag.bind(this));
+        document.addEventListener('touchend', this.dragEnd.bind(this));
+      }
+
+      dragStart(e) {
+        if (e.type === 'touchstart') {
+          this.initialX = e.touches[0].clientX - this.xOffset;
+          this.initialY = e.touches[0].clientY - this.yOffset;
+        } else {
+          this.initialX = e.clientX - this.xOffset;
+          this.initialY = e.clientY - this.yOffset;
+        }
+
+        if (e.target === this.element) {
+          this.isDragging = true;
+        }
+      }
+
+      drag(e) {
+        if (this.isDragging) {
+          e.preventDefault();
+
+          if (e.type === 'touchmove') {
+            this.currentX = e.touches[0].clientX - this.initialX;
+            this.currentY = e.touches[0].clientY - this.initialY;
+          } else {
+            this.currentX = e.clientX - this.initialX;
+            this.currentY = e.clientY - this.initialY;
+          }
+
+          // Boundary constraints
+          const containerRect = this.container.getBoundingClientRect();
+          const elementRect = this.element.getBoundingClientRect();
+
+          const maxX = containerRect.width - elementRect.width;
+          const maxY = containerRect.height - elementRect.height;
+
+          this.currentX = Math.max(0, Math.min(this.currentX, maxX));
+          this.currentY = Math.max(0, Math.min(this.currentY, maxY));
+
+          this.xOffset = this.currentX;
+          this.yOffset = this.currentY;
+
+          this.setTranslate(this.currentX, this.currentY);
+        }
+      }
+
+      dragEnd() {
+        this.isDragging = false;
+      }
+
+      setTranslate(xPos, yPos) {
+        this.element.style.left = `${xPos}px`;
+        this.element.style.top = `${yPos}px`;
+      }
+    }
+
+    // Initialize draggable bubbles
+    const bubblesContainer = document.getElementById('bubblesContainer');
+    document.querySelectorAll('.draggable-bubble').forEach(bubble => {
+      new DraggableBubble(bubble, bubblesContainer);
+    });
+
+    // 3D Tilt Card Effect
+    const tiltCard = document.getElementById('tiltCard');
+
+    tiltCard.addEventListener('mousemove', (e) => {
+      const rect = tiltCard.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = ((y - centerY) / centerY) * -10;
+      const rotateY = ((x - centerX) / centerX) * 10;
+
+      tiltCard.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+    });
+
+    tiltCard.addEventListener('mouseleave', () => {
+      tiltCard.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale3d(1, 1, 1)';
+    });
+
+    // Magnetic Button Effect
+    document.querySelectorAll('.magnetic-btn').forEach(button => {
+      button.addEventListener('mousemove', (e) => {
+        const rect = button.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+
+        const moveX = x * 0.3;
+        const moveY = y * 0.3;
+
+        button.style.transform = `translate(${moveX}px, ${moveY}px) translateY(-2px)`;
+      });
+
+      button.addEventListener('mouseleave', () => {
+        button.style.transform = 'translate(0, 0)';
+      });
+    });
+
+    // Smooth scroll for navigation
+    document.querySelectorAll('nav a').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+        }
+      });
+    });
+
+    // Intersection Observer for fade-in animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    document.querySelectorAll('section').forEach(section => {
+      observer.observe(section);
+    });
+  </script>
+</body>
+</html>
