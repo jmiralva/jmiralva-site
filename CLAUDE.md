@@ -2,6 +2,25 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Quick Reference
+
+**Common Tasks** (in this file):
+- [Writing blog posts](#writing-blog-posts)
+- [Adding a project](#adding-a-new-project)
+- [Adding a testimonial](#adding-a-new-testimonial)
+- [Updating navigation](#updating-navigation)
+- [Adding optimized images](#adding-optimized-images)
+- [Local development](#local-development)
+
+**Architecture Details** (separate file):
+- [Design system](context/ARCHITECTURE.md#design-system)
+- [Component patterns](context/ARCHITECTURE.md#reusable-components)
+- [Blog system architecture](context/ARCHITECTURE.md#blog-system)
+- [Responsive design](context/ARCHITECTURE.md#responsive-design)
+- [JavaScript organization](context/ARCHITECTURE.md#javascript-organization)
+
+---
+
 ## Project Overview
 
 This is a personal portfolio website for Jorge Mir Alvarez, a product manager based in Chicago. The site is deployed on Netlify and includes pages for home, about, projects, testimonials, and a blog.
@@ -51,79 +70,6 @@ This is a personal portfolio website for Jorge Mir Alvarez, a product manager ba
 ├── package.json            # Dependencies and scripts
 └── netlify.toml            # Netlify build configuration
 ```
-
-## Key Architecture Patterns
-
-### Astro Pages and Routing
-Astro uses file-based routing in the `src/pages/` directory:
-- `index.astro` → `/`
-- `about.astro` → `/about`
-- `projects.astro` → `/projects`
-- `testimonials.astro` → `/testimonials`
-- `blog/index.astro` → `/blog`
-- `blog/[...slug].astro` → `/blog/{slug}` (dynamic routes for blog posts)
-
-### Shared Layout Component
-All pages use `BaseLayout.astro` which provides:
-- HTML document structure with meta tags
-- Navigation bar with links to all pages
-- Footer with social links
-- Common scripts (nav scroll shadow effect)
-- Slot for page-specific scripts
-- This eliminates the previous duplication of nav/footer across HTML files
-
-### Reusable Components
-The site uses reusable components for repeated content:
-- **ProjectCard.astro**: Displays project cards with image, title, description, and tech stack
-- **TestimonialCard.astro**: Displays testimonial quotes with attribution
-- Both components accept props, making it easy to add new items by just updating data arrays
-
-### Data-Driven Pages
-Projects and testimonials are data-driven:
-- **Projects**: Data defined as an array in `projects.astro` frontmatter, mapped to `ProjectCard` components
-- **Testimonials**: Data defined as an array in `testimonials.astro` frontmatter, mapped to `TestimonialCard` components
-- To add a new project/testimonial, just add an object to the array - no HTML duplication needed
-
-### Image Optimization
-All images in `src/assets/` are automatically optimized by Astro:
-- Converted to WebP format for 90%+ file size reduction
-- Resized to specified dimensions
-- Lazy loaded with modern attributes (`loading="lazy"`, `decoding="async"`)
-- Content-hashed filenames for cache busting
-- Images in `public/` are copied as-is without optimization
-
-### JavaScript Organization
-JavaScript is organized for optimal performance:
-- **Common scripts**: Nav scroll effect is in `BaseLayout.astro` (runs on all pages)
-- **Page-specific scripts**: Fade-in animations only load on pages that need them
-- **Inline scripts**: All scripts use `is:inline` to avoid bundling overhead
-- No external script files - all JavaScript is inlined in page HTML
-
-### Blog System
-Blog posts are written in Markdown and stored in `src/content/blog/`:
-- Each post has frontmatter with `title`, `description`, `pubDate`, and optional `heroImage`
-- Posts are rendered using the `BlogPost.astro` layout
-- Blog index automatically lists all posts sorted by date
-- Content collections provide type-safe access to post metadata
-
-### Design System
-The site uses a cohesive design system defined in CSS variables in `public/styles.css`:
-- **Color palette**: Forest green (`#2D6A4F`) as primary accent, cream/beige backgrounds (`#FAF8F2`, `#F0EBE3`)
-- **Typography**: Instrument Serif for headings, Source Sans 3 for body text
-- **Spacing**: Consistent spacing scale using CSS custom properties
-- **Layout**: Fixed navigation bar, max-width content containers
-
-### Responsive Design
-The site is fully responsive with breakpoints at:
-- 968px: Switches hero layout from side-by-side to stacked, simplifies testimonials grid
-- 600px: Further reduces spacing and font sizes for mobile
-
-### Client-Side JavaScript
-JavaScript in `public/script.js` handles:
-- Smooth scrolling for anchor links
-- Intersection Observer for testimonial/project card fade-in animations
-- Navigation shadow on scroll
-- Project card click handling
 
 ## Development Workflow
 
@@ -209,6 +155,7 @@ Netlify automatically builds and deploys when pushing to the main branch:
      description: 'What it does',
      url: 'https://project-url.com',
      image: newProjectImg,
+     altText: 'Descriptive alt text for accessibility and SEO',
      techStack: 'How it was built'
    }
    ```
@@ -240,18 +187,26 @@ The `TestimonialCard` component will automatically render it
    ```
 4. Astro will automatically optimize, resize, and convert to WebP
 
+## Core Architecture Patterns
+
+**Astro Pages and Routing**: File-based routing in `src/pages/` - each `.astro` file becomes a route. Dynamic routes use `[...slug]` pattern.
+
+**Shared Layout Component**: `BaseLayout.astro` provides HTML structure, navigation, footer, meta tags, and SEO enhancements for all pages.
+
+**Reusable Components**: `ProjectCard` and `TestimonialCard` components accept props, making it easy to add items by updating data arrays.
+
+**Data-Driven Pages**: Projects and testimonials are defined as arrays of objects, then mapped to components - no HTML duplication.
+
+**Image Optimization**: Images in `src/assets/` are automatically converted to WebP, resized, lazy loaded, and cache-busted.
+
+📚 **For detailed architecture patterns**, see [ARCHITECTURE.md](context/ARCHITECTURE.md)
+
 ## Important Notes
 
-- **Build process**: This is an Astro site with a build step (not a static HTML site)
+- **Build process required**: This is an Astro site with a build step (not a static HTML site)
 - **Component architecture**: Navigation, footer, project cards, and testimonials use reusable components
-- **Data-driven content**: Projects and testimonials are defined as data arrays, not hardcoded HTML
-- **Image optimization**: Images in `src/assets/` are automatically optimized to WebP (90%+ size reduction)
-- **Performance optimizations**:
-  - Page-specific JavaScript only loads where needed
-  - Lazy loading for images
-  - Inline scripts to avoid bundling overhead
+- **Image locations matter**: `src/assets/` for optimized images, `public/` for static files
 - **Content collections**: Blog posts use Astro's content collections for type safety
-- **Markdown support**: Blog posts are written in Markdown with frontmatter
-- **Static output**: Despite using Astro, the site is fully static (no server-side rendering)
+- **Static output**: Site is fully static (no server-side rendering)
 - **Dependencies**: Managed via npm; keep `package.json` and `package-lock.json` in sync
-- **Git**: Single branch (`main`) with clean commits
+- **Git workflow**: Single `main` branch with clean commits
