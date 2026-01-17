@@ -51,25 +51,35 @@
   --shadow-magnetic: 0 12px 28px color-mix(in srgb, var(--color-accent-1) 30%, transparent);
 }
 
-/* Font option overrides */
+/* Font pairing overrides */
+body[data-font="montserrat-hind"] {
+  --font-display: 'Montserrat', sans-serif;
+  --font-body: 'Hind', sans-serif;
+}
+
 body[data-font="jakarta"] {
   --font-display: 'Plus Jakarta Sans', sans-serif;
   --font-body: 'Plus Jakarta Sans', sans-serif;
 }
 
-body[data-font="outfit"] {
+body[data-font="poppins-inter"] {
+  --font-display: 'Poppins', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+body[data-font="outfit-dm"] {
   --font-display: 'Outfit', sans-serif;
-  --font-body: 'Outfit', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
 }
 
-body[data-font="sora"] {
+body[data-font="sora-work"] {
   --font-display: 'Sora', sans-serif;
-  --font-body: 'Sora', sans-serif;
+  --font-body: 'Work Sans', sans-serif;
 }
 
-body[data-font="work-sans"] {
-  --font-display: 'Work Sans', sans-serif;
-  --font-body: 'Work Sans', sans-serif;
+body[data-font="archivo"] {
+  --font-display: 'Archivo', sans-serif;
+  --font-body: 'Archivo', sans-serif;
 }
 
 * {
