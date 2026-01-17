@@ -1,14 +1,14 @@
 /* Hybrid Playful Style Guide - Green Meadow with Font Options */
 
 :root {
-  /* Green Meadow Palette (Default) */
-  --color-primary: #3EB489;
-  --color-secondary: #2D8B6E;
-  --color-accent-1: #FF8369;
-  --color-accent-2: #FFB085;
-  --color-accent-3: #FFC857;
-  --color-bg: #FFFBF5;
-  --color-text: #2C3E36;
+  /* New Green Palette */
+  --color-primary: #6a994e;
+  --color-secondary: #386641;
+  --color-accent-1: #bc4749;
+  --color-accent-2: #a7c957;
+  --color-accent-3: #f2e8cf;
+  --color-bg: #f2e8cf;
+  --color-text: #1a2e1f;
 
   /* Derived colors */
   --color-text-muted: color-mix(in srgb, var(--color-text) 60%, transparent);
