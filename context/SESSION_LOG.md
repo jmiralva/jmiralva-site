@@ -138,3 +138,32 @@ None - documentation restructuring completed successfully
 - Monitor whether the new Quick Reference structure actually speeds up common tasks
 - Consider refining CLAUDE.md further based on actual usage patterns
 - May want to add more cross-references between files as patterns emerge
+
+---
+
+## 2025-01-17 - Session Logging Reminder Addition
+**Time**: ~5 minutes
+**Phase**: Process Improvement
+
+### What We Did
+- Added session logging reminder to CLAUDE.md Important Notes section
+- Discussed rationale for keeping Development Workflow in CLAUDE.md (high-frequency content)
+- Updated SESSION_LOG.md with this mini-session
+
+### Files Modified
+- `CLAUDE.md` - Added session logging reminder to Important Notes (now 8 notes, was 7)
+
+### Decisions Made
+- **Session logging reminder placement**: Added to Important Notes section so it's visible in every context
+- **Development Workflow stays in CLAUDE.md**: Confirmed it's high-frequency "how to DO things" content vs ARCHITECTURE.md's "how does this WORK" reference material
+
+### Key Learnings
+- **Distinction between CLAUDE.md and ARCHITECTURE.md content**:
+  - CLAUDE.md = Actionable, procedural ("how do I DO things?")
+  - ARCHITECTURE.md = Conceptual, explanatory ("how does this WORK?")
+- Development Workflow (npm commands, making changes, deployment) is used almost every session
+- Session logging should be a standard end-of-session task to maintain context continuity
+
+### Next Session
+- Use the session logging reminder to ensure context/SESSION_LOG.md is always updated
+- Monitor if having the reminder visible improves session log consistency

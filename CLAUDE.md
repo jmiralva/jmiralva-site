@@ -210,3 +210,4 @@ The `TestimonialCard` component will automatically render it
 - **Static output**: Site is fully static (no server-side rendering)
 - **Dependencies**: Managed via npm; keep `package.json` and `package-lock.json` in sync
 - **Git workflow**: Single `main` branch with clean commits
+- **Session logging**: At the end of each work session, update `context/SESSION_LOG.md` with work done, decisions made, and any important context for next session
