@@ -26,6 +26,6 @@ pnpm-debug.log*
 # local working folders
 screenshots/
 blog-sample/
-context/SESSION_LOG.md
+context/
 *TODO.md
 *_TODO.md
