@@ -465,6 +465,8 @@ h1, h2, h3, h4 {
     font-variation-settings: "wdth" 85;
 }
 
+.hero-more { margin: 10px 0 0; }
+
 /* The one orchestrated moment: the pink plate settles into place on load.
    No final keyframe, so each element eases into its own resting value. */
 @media (prefers-reduced-motion: no-preference) {
@@ -821,6 +823,7 @@ h1, h2, h3, h4 {
     }
     .hero-intro { grid-column: 1; grid-row: 3; }
     .credit-line { grid-column: 1; grid-row: 4; }
+    .hero-more { grid-column: 1; grid-row: 5; }
 
     .split,
     .about-grid,
