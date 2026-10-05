@@ -187,7 +187,7 @@ Add a testimonial object to the `testimonials` array in `src/data/testimonials.t
   snippet: "Optional short excerpt for the home page",
   name: "Person Name",
   nameUrl: "https://linkedin.com/in/person",
-  role: "Their Title, Company"
+  role: "Their Title, Company"  // from when you worked together, not their current job
 }
 ```
 It appears on /testimonials automatically. To feature it on the home page, add the name to `homeFeaturedNames` in the same file. If a snippet starts or ends mid-sentence, show the cut with "…".

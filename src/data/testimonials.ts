@@ -9,6 +9,10 @@ export interface Testimonial {
   snippet?: string;
   name: string;
   nameUrl: string;
+  /**
+   * Their title and company from when they worked with Jorge, not today's.
+   * If it changed while they overlapped, use the most senior one they held.
+   */
   role: string;
 }
 
@@ -21,31 +25,31 @@ export const testimonials: Testimonial[] = [
     snippet: "I'm consistently impressed by the thoughtfulness and thoroughness that he brings to his work.",
     name: "Vicky Volvovski",
     nameUrl: "https://www.linkedin.com/in/vickyvolvovski/",
-    role: "Head of Product, Conduit Tech"
+    role: "Head of Product Management, Postlight"
   },
   {
     quote: "An incredibly skilled product thinker, strategist, and lead — one of the best I've worked with.",
     name: "Chris LoSacco",
     nameUrl: "https://www.linkedin.com/in/closacco/",
-    role: "VP of Solution Architecture, Launch by NTT Data"
+    role: "President, Postlight"
   },
   {
     quote: "Jorge helped build this place. It truly would not have been the same Postlight without him and I'm grateful we got to work with him.",
     name: "Paul Ford",
     nameUrl: "https://www.linkedin.com/in/ftrain/",
-    role: "Co-Founder, Aboard / CEO, Postlight"
+    role: "Co-Founder & CEO, Postlight"
   },
   {
     quote: "Jorge is a thoughtful leader and good at identifying problems from their origin and addressing them. Anyone would be lucky to have him on their team!",
     name: "Vinod Periasamy",
     nameUrl: "https://www.linkedin.com/in/vinod-periasamy/",
-    role: "Senior Engineering Manager, Multi Media, LLC"
+    role: "Engineering Manager, Zapier"
   },
   {
     quote: "Jorge was clear with me about process, expectations, and scope. He was flexible, open to suggestions and feedback, and yet it was clear he knew how to deliver results. His attention to detail, expansive product knowledge, strategic thinking, and clear project management made him someone I would be thankful to work with time and time again.",
     name: "Grace Sunnell",
     nameUrl: "https://www.linkedin.com/in/gsunnell/",
-    role: "Principal Product Designer, Slack"
+    role: "Lead Product Designer, Postlight"
   },
   {
     snippet: "…an outstanding product manager and a joy to work with.",
@@ -58,19 +62,19 @@ export const testimonials: Testimonial[] = [
     quote: "Jorge is an exceptional product thinker and is leaving behind a place that has grown tremendously as direct result of his collaboration and leadership. We really appreciate what he brought to Postlight, culturally, ethically and as a great practitioner.",
     name: "Rich Ziade",
     nameUrl: "https://www.linkedin.com/in/rich-ziade-a600221/",
-    role: "Co-Founder, Aboard / President, Postlight"
+    role: "Co-Founder & President, Postlight"
   },
   {
     quote: "Jorge was a voice of reason during our short timeline. He pulled us back when we were over-ambitious and directed the project scope to a manageable place. He was very thoughtful with his feedback as we worked through the many small design details.",
     name: "Andrew Possehl",
     nameUrl: "https://www.linkedin.com/in/possehl/",
-    role: "Product Designer, Meta"
+    role: "Lead Product Designer, Postlight"
   },
   {
     quote: "Jorge is a great listener, mentor, and people / product manager. I've learned a lot from him, and I'm grateful for how he has advocated for me.",
     name: "Lindsey Fogle",
     nameUrl: "https://www.linkedin.com/in/lindseyfogle/",
-    role: "Group Product Manager, Discourse"
+    role: "Product Manager, Postlight"
   },
   {
     quote: "Jorge has played a key role in improving the Developer Platform team's own processes, as well as relationships with internal and external stakeholders.",
