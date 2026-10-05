@@ -24,6 +24,7 @@ export const testimonials: Testimonial[] = [
   {
     quote: "Jorge leads the way with the kind of impact that typically takes years. But he's been able to accumulate in less than a year and does it with generosity, vision and infectious energy.",
     name: "Kate Mortenson",
+    nameUrl: "https://www.linkedin.com/in/kate-m-07a521bb/",
     role: "Product Manager, Linnworks"
   },
   {
