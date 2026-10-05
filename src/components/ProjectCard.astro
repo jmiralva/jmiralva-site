@@ -3,8 +3,6 @@ import { Image } from 'astro:assets';
 import type { Project } from '../data/projects';
 
 interface Props extends Project {
-  /** "card" for the home page grid, "row" for the full list on /projects */
-  variant?: 'card' | 'row';
   techLabel?: string;
 }
 
@@ -15,33 +13,26 @@ const {
   image,
   altText,
   techStack,
-  variant = 'row',
   techLabel = "How it's built"
 } = Astro.props;
 
-const Heading = variant === 'card' ? 'h3' : 'h2';
-
 // Responsive sizes, never larger than the original (the SocialCal phone shot is 455px wide)
 const widths = [...new Set([480, 960, 1440].map((w) => Math.min(w, image.width)))];
-const sizes = variant === 'card'
-  ? '(max-width: 860px) 100vw, 540px'
-  : '(max-width: 860px) 100vw, 460px';
+const sizes = '(max-width: 860px) 100vw, 460px';
 ---
 
-<article class={`project project--${variant}`}>
+<article class="project">
   <div class="project-frame">
     <Image src={image} alt={altText} widths={widths} sizes={sizes} />
   </div>
   <div class="project-body">
-    <Heading class="project-title">
+    <h2 class="project-title">
       <a class="ink-link" href={url} target="_blank" rel="noopener noreferrer">{title}</a>
-    </Heading>
+    </h2>
     <p class="project-description" set:html={description}></p>
-    {variant === 'row' && (
-      <p class="project-tech">
-        <span class="project-tech-label">{techLabel}</span>
-        <span set:html={techStack}></span>
-      </p>
-    )}
+    <p class="project-tech">
+      <span class="project-tech-label">{techLabel}</span>
+      <span set:html={techStack}></span>
+    </p>
   </div>
 </article>

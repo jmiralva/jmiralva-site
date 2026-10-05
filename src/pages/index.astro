@@ -1,7 +1,7 @@
 ---
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ProjectCard from '../components/ProjectCard.astro';
+import ProjectCrate from '../components/ProjectCrate.astro';
 import TestimonialCard from '../components/TestimonialCard.astro';
 import PostList from '../components/PostList.astro';
 import headshotImg from '../assets/headshot.jpg';
@@ -74,11 +74,7 @@ const recentPosts = (await getSortedPosts()).slice(0, 3);
         <h2 class="section-title" id="projects-heading">Side projects</h2>
         <p class="band-intro">Things I've built for funsies in my spare time.</p>
       </div>
-      <div class="project-grid">
-        {projects.map((project) => (
-          <ProjectCard {...project} variant="card" />
-        ))}
-      </div>
+      <ProjectCrate projects={projects} />
       <p class="band-foot"><a class="more-link" href="/projects">See all projects</a></p>
     </div>
   </section>

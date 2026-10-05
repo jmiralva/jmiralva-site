@@ -1,0 +1,304 @@
+---
+// Home page side projects, shown as record sleeves in a crate. The names of the
+// sleeves behind peek over the top. Next tips the front sleeve forward and drops
+// it at the back; Previous pulls the back one out to the front; clicking a
+// peeking sleeve jumps to it; swiping works on phones.
+import { Image } from 'astro:assets';
+import type { Project } from '../data/projects';
+
+interface Props {
+  projects: Project[];
+}
+
+const { projects } = Astro.props;
+
+// Top-band colours alternate so neighbouring sleeves are easy to tell apart
+const bands = ['var(--blue)', 'var(--ink)'];
+const widthsFor = (width: number) => [...new Set([480, 960].map((w) => Math.min(w, width)))];
+---
+
+<div class="crate" data-crate>
+  <div class="crate-stack">
+    {projects.map((project, i) => (
+      <figure
+        class="sleeve"
+        data-pos={i}
+        aria-hidden={i === 0 ? undefined : 'true'}
+        style={`--band: ${bands[i % bands.length]}`}
+      >
+        <figcaption class="sleeve-band">{project.title}</figcaption>
+        <div class="sleeve-art">
+          <Image
+            src={project.image}
+            alt={project.altText}
+            widths={widthsFor(project.image.width)}
+            sizes="(max-width: 860px) 90vw, 440px"
+            draggable="false"
+          />
+        </div>
+      </figure>
+    ))}
+  </div>
+
+  <div class="crate-info">
+    <div class="crate-controls">
+      <button class="crate-btn" type="button" data-prev aria-label="Previous project">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" /></svg>
+      </button>
+      <button class="crate-btn" type="button" data-next aria-label="Next project">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" /></svg>
+      </button>
+      <p class="crate-count" aria-hidden="true">1 of {projects.length}</p>
+    </div>
+    <p class="visually-hidden" aria-live="polite" data-announce></p>
+
+    {projects.map((project, i) => (
+      <div class="crate-detail" hidden={i !== 0}>
+        <h3 class="project-title crate-title">
+          <a class="ink-link" href={project.url} target="_blank" rel="noopener noreferrer">{project.title}</a>
+        </h3>
+        <p class="crate-summary">{project.summary}</p>
+      </div>
+    ))}
+  </div>
+</div>
+
+<style>
+  .crate {
+    display: grid;
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+    gap: clamp(28px, 5vw, 72px);
+    align-items: center;
+  }
+
+  /* Leaves room above the front sleeve for the three behind it to peek out */
+  .crate-stack {
+    position: relative;
+    width: 100%;
+    max-width: 440px;
+    aspect-ratio: 1 / 1.25;
+    perspective: 1100px;
+    perspective-origin: 50% 20%;
+    touch-action: pan-y;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  .sleeve {
+    --y: 0%;
+    --r: 0deg;
+    --s: 1;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: 1;
+    margin: 0;
+    border: var(--ink-rule);
+    background: var(--paper);
+    container-type: inline-size;
+    transform-origin: 50% 100%;
+    transform: translateY(var(--y)) rotateX(var(--r)) scale(var(--s));
+    transition: transform .55s cubic-bezier(.2, .8, .2, 1), opacity .4s ease, translate .2s ease;
+    backface-visibility: hidden;
+  }
+
+  /* Each sleeve further back sits higher and a little smaller, so its band shows */
+  .sleeve[data-pos="0"] { z-index: 4; }
+  .sleeve[data-pos="1"] { --y: -12.5%; --s: .955; z-index: 3; }
+  .sleeve[data-pos="2"] { --y: -25%; --s: .91; z-index: 2; }
+  .sleeve[data-pos="3"] { --y: -37.5%; --s: .865; z-index: 1; }
+  /* Tipped forward toward the viewer, on its way to the back of the crate */
+  .sleeve[data-pos="out"] { --y: 6%; --r: -75deg; z-index: 5; opacity: 0; }
+  .sleeve.no-anim { transition: none; }
+
+  .sleeve:is([data-pos="1"], [data-pos="2"], [data-pos="3"]) { cursor: pointer; }
+  .sleeve:is([data-pos="1"], [data-pos="2"], [data-pos="3"]):hover { translate: 0 -3%; }
+
+  .sleeve-band {
+    flex: none;
+    height: 8cqi;
+    padding: 0 4cqi;
+    overflow: hidden;
+    background: var(--band);
+    color: #fff;
+    font-family: var(--display);
+    font-weight: 700;
+    font-variation-settings: "wdth" 85;
+    font-size: 3.7cqi;
+    line-height: 8cqi;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .sleeve-art {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6cqi;
+    background-color: var(--paper);
+    background-image: radial-gradient(circle, rgba(0, 120, 191, .2) 0 1.1px, transparent 1.6px);
+    background-size: 6px 6px;
+  }
+  .sleeve-art :global(img) {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+  }
+
+  .crate-controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: clamp(16px, 2.5vw, 24px);
+  }
+
+  .crate-btn {
+    display: grid;
+    place-items: center;
+    width: 48px;
+    height: 48px;
+    padding: 0;
+    border: var(--ink-rule);
+    background: var(--paper);
+    color: var(--ink);
+    cursor: pointer;
+  }
+  .crate-btn:hover { background: var(--ink); color: var(--paper); }
+  .crate-btn svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2.5;
+  }
+
+  .crate-count {
+    margin: 0 0 0 10px;
+    font-family: var(--display);
+    font-weight: 600;
+    color: var(--ink-soft);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .crate-title { font-size: clamp(1.75rem, 3.4vw, 2.6rem); }
+
+  .crate-summary {
+    max-width: 26em;
+    margin: 16px 0 0;
+    font-family: var(--display);
+    font-weight: 600;
+    font-variation-settings: "wdth" 90, "opsz" 48;
+    font-size: clamp(1.2rem, 2vw, 1.5rem);
+    line-height: 1.25;
+  }
+
+  @media (max-width: 860px) {
+    .crate { grid-template-columns: minmax(0, 1fr); }
+    .crate-stack { max-width: 360px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sleeve { transition: none; }
+  }
+</style>
+
+<script>
+  const FLIP_MS = 550; // matches the sleeve transform transition
+
+  document.querySelectorAll<HTMLElement>('[data-crate]').forEach((root) => {
+    const sleeves = [...root.querySelectorAll<HTMLElement>('.sleeve')];
+    const details = [...root.querySelectorAll<HTMLElement>('.crate-detail')];
+    const titles = details.map((d) => d.querySelector('h3')?.textContent?.trim() ?? '');
+    const count = root.querySelector<HTMLElement>('.crate-count')!;
+    const announce = root.querySelector<HTMLElement>('[data-announce]')!;
+    const stack = root.querySelector<HTMLElement>('.crate-stack')!;
+    const n = sleeves.length;
+    const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // pos[i] is where sleeve i sits: 0 is the front, n - 1 the back
+    let pos = sleeves.map((_, i) => i);
+    let busy = false;
+
+    const render = (skip: HTMLElement[] = []) => {
+      const front = pos.indexOf(0);
+      sleeves.forEach((sleeve, i) => {
+        if (!skip.includes(sleeve)) sleeve.dataset.pos = String(pos[i]);
+        if (pos[i] === 0) sleeve.removeAttribute('aria-hidden');
+        else sleeve.setAttribute('aria-hidden', 'true');
+      });
+      details.forEach((detail, i) => { detail.hidden = i !== front; });
+      count.textContent = `${front + 1} of ${n}`;
+      announce.textContent = `${titles[front]}, ${front + 1} of ${n}`;
+    };
+
+    // Tip the front `steps` sleeves forward; they drop to the back of the crate
+    const forward = (steps: number) => {
+      if (busy || steps <= 0) return;
+      const flipping = sleeves.filter((_, i) => pos[i] < steps);
+      pos = pos.map((p) => (p - steps + n) % n);
+      if (reduceMotion) { render(); return; }
+      busy = true;
+      flipping.forEach((sleeve) => { sleeve.dataset.pos = 'out'; });
+      render(flipping);
+      setTimeout(() => {
+        flipping.forEach((sleeve) => {
+          sleeve.classList.add('no-anim');
+          sleeve.dataset.pos = String(pos[sleeves.indexOf(sleeve)]);
+          sleeve.style.opacity = '0';
+        });
+        void root.offsetWidth; // apply the jump to the back before fading in
+        flipping.forEach((sleeve) => {
+          sleeve.classList.remove('no-anim');
+          sleeve.style.opacity = '';
+        });
+        busy = false;
+      }, FLIP_MS);
+    };
+
+    // Pull the back sleeve out and stand it up at the front
+    const backward = () => {
+      if (busy) return;
+      const sleeve = sleeves[pos.indexOf(n - 1)];
+      pos = pos.map((p) => (p + 1) % n);
+      if (reduceMotion) { render(); return; }
+      busy = true;
+      sleeve.classList.add('no-anim');
+      sleeve.dataset.pos = 'out';
+      void sleeve.offsetWidth;
+      sleeve.classList.remove('no-anim');
+      render();
+      setTimeout(() => { busy = false; }, FLIP_MS);
+    };
+
+    root.querySelector('[data-next]')!.addEventListener('click', () => forward(1));
+    root.querySelector('[data-prev]')!.addEventListener('click', backward);
+
+    // Swipe left for next, right for previous
+    let startX: number | null = null;
+    let swiped = false;
+    stack.addEventListener('pointerdown', (e) => { startX = e.clientX; swiped = false; });
+    stack.addEventListener('pointerup', (e) => {
+      if (startX === null) return;
+      const dx = e.clientX - startX;
+      startX = null;
+      if (Math.abs(dx) > 40) {
+        swiped = true;
+        if (dx < 0) forward(1);
+        else backward();
+      }
+    });
+
+    // Clicking a peeking sleeve brings it to the front
+    sleeves.forEach((sleeve, i) => sleeve.addEventListener('click', () => {
+      if (swiped) { swiped = false; return; }
+      forward(pos[i]);
+    }));
+  });
+</script>
