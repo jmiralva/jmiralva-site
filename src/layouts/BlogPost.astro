@@ -12,10 +12,11 @@ interface Props {
 
 const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 
-// Generate canonical URL and OG image for this blog post
+// Generate canonical URL and OG image for this blog post.
+// Share previews need a full URL, so a heroImage path like '/images/x.jpg' is made absolute.
 const slug = Astro.url.pathname.split('/').filter(Boolean).pop();
 const canonicalURL = `https://jmiralva.me/blog/${slug}`;
-const ogImage = heroImage || 'https://jmiralva.me/assets/headshot.jpg';
+const ogImage = new URL(heroImage || '/assets/og-image.jpg', 'https://jmiralva.me').href;
 ---
 
 <BaseLayout
