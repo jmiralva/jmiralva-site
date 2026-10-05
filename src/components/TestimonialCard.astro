@@ -6,7 +6,7 @@ interface Props extends Testimonial {
   variant?: 'lead' | 'standard';
 }
 
-const { quote, name, nameUrl, role, variant = 'standard' } = Astro.props;
+const { quote, name, nameUrl, role, now, variant = 'standard' } = Astro.props;
 ---
 
 <figure class={variant === 'lead' ? 'lead-quote' : 'quote'}>
@@ -18,5 +18,6 @@ const { quote, name, nameUrl, role, variant = 'standard' } = Astro.props;
       ? <a class="ink-link" href={nameUrl} target="_blank" rel="noopener noreferrer">{name}</a>
       : <span class="byline-name">{name}</span>}<br>
     {role}
+    {now && <span class="byline-now">Now {now}</span>}
   </figcaption>
 </figure>

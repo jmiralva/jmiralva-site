@@ -446,11 +446,6 @@ h1, h2, h3, h4 {
 }
 .hero-intro .hero-lede { margin-bottom: 16px; }
 
-.hero-aside {
-    font-style: italic;
-    color: var(--ink-soft);
-}
-
 .credit-line {
     max-width: 26rem;
     margin: 26px 0 0;
@@ -591,6 +586,7 @@ h1, h2, h3, h4 {
     font-variation-settings: "wdth" 85;
 }
 .byline-name { color: var(--ink); }
+.byline-now { display: block; }
 
 .quote-grid {
     display: grid;
