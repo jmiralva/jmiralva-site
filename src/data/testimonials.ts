@@ -36,7 +36,7 @@ export const testimonials: Testimonial[] = [
     name: "Chris LoSacco",
     nameUrl: "https://www.linkedin.com/in/closacco/",
     role: "President, Postlight",
-    now: "VP of Solution Architecture, Launch by NTT Data"
+    now: "Co-Founder, Chris & Gina"
   },
   {
     quote: "Jorge helped build this place. It truly would not have been the same Postlight without him and I'm grateful we got to work with him.",
@@ -97,7 +97,8 @@ export const testimonials: Testimonial[] = [
     quote: "Jorge has played a key role in improving the Developer Platform team's own processes, as well as relationships with internal and external stakeholders.",
     name: "Fokke Zandbergen",
     nameUrl: "https://www.linkedin.com/in/fokkezb/",
-    role: "Staff Engineer, Zapier"
+    role: "Staff Engineer, Zapier",
+    now: "Principal Engineer, Zapier"
   }
 ];
 
