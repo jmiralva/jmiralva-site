@@ -4,7 +4,7 @@ description: ''
 pubDate: 2020-02-07
 ---
 
-_This post originally appeared on the now defunct [Postlight](https://postlight.com/) blog._
+_This post originally appeared on the now defunct [Postlight](https://web.archive.org/web/20230609023943/https://postlight.com/insights/i-tried-150-apps-to-stay-relevant-as-a-product-manager) blog._
 
 If you look at my phone right now you’ll find six note-taking apps, 11 apps to track my finances, seven different fitness apps, and nine ways to message people. Do I use them all? Sometimes, occasionally, not really, and yes, respectively. Do I need to have them all? I prefer not to answer. But we’re not here to talk about my potential addiction to trying software products. I’m here to convince you that testing out new software has helped me grow as a product manager.
 

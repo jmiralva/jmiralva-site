@@ -8,7 +8,8 @@ export interface Testimonial {
   /** Shorter excerpt for the home page */
   snippet?: string;
   name: string;
-  nameUrl: string;
+  /** LinkedIn profile; the name shows as plain text if this is missing */
+  nameUrl?: string;
   /**
    * Their title and company from when they worked with Jorge, not today's.
    * If it changed while they overlapped, use the most senior one they held.
@@ -20,6 +21,11 @@ export const leadTestimonialName = 'Paul Ford';
 export const homeFeaturedNames = ['Vicky Volvovski', 'Chris LoSacco', 'Bronwyn Larsen'];
 
 export const testimonials: Testimonial[] = [
+  {
+    quote: "Jorge leads the way with the kind of impact that typically takes years. But he's been able to accumulate in less than a year and does it with generosity, vision and infectious energy.",
+    name: "Kate Mortenson",
+    role: "Product Manager, Linnworks"
+  },
   {
     quote: "Jorge is a driving force behind many improvements on the PM team. Some are behind the scenes, which help our team operate smoothly. Others are big & experimental. I'm consistently impressed by the thoughtfulness and thoroughness that he brings to his work.",
     snippet: "I'm consistently impressed by the thoughtfulness and thoroughness that he brings to his work.",

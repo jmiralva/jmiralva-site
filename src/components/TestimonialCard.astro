@@ -14,7 +14,9 @@ const { quote, name, nameUrl, role, variant = 'standard' } = Astro.props;
     <p>{quote}</p>
   </blockquote>
   <figcaption class="byline">
-    <a class="ink-link" href={nameUrl} target="_blank" rel="noopener noreferrer">{name}</a><br>
+    {nameUrl
+      ? <a class="ink-link" href={nameUrl} target="_blank" rel="noopener noreferrer">{name}</a>
+      : <span class="byline-name">{name}</span>}<br>
     {role}
   </figcaption>
 </figure>
