@@ -9,7 +9,7 @@ This document provides detailed architectural patterns and design decisions for 
 This is an Astro-based static site generator project that emphasizes:
 - **Component reusability** - Shared layouts and reusable components eliminate duplication
 - **Data-driven pages** - Projects and testimonials defined as data, not HTML
-- **Performance** - Optimized images, inline scripts, lazy loading
+- **Performance** - Optimized images, minimal JavaScript, lazy loading
 - **Type safety** - Content collections for blog posts
 - **Developer experience** - File-based routing, hot reloading, clear patterns
 
@@ -42,23 +42,24 @@ All pages use `BaseLayout.astro` (`src/layouts/BaseLayout.astro`) which provides
 **HTML document structure**:
 - `<head>` with meta tags (title, description, canonical URL)
 - Open Graph and Twitter Card tags for social sharing
-- Favicons and font preloading
+- Favicons and Google Fonts (Bricolage Grotesque, Newsreader)
 - SEO enhancements (structured data slot, article meta tags)
 
 **Navigation bar**:
-- Fixed top navigation with logo and page links
-- Scroll-based shadow effect
-- Responsive design
+- "jmiralva" wordmark (links home) and page links
+- The current page's link is underlined and marked with `aria-current`
+- A "Skip to content" link appears first for keyboard users
+- Every page's content is wrapped in `<main id="main">` by the layout, so pages don't add their own `<main>`
 
 **Footer**:
-- Social media links (email, LinkedIn, Twitter, Instagram, Bandcamp, Goodreads, Apple Music)
-- Copyright notice
+- Printed in riso blue with a thin pink stripe on top
+- Seven social links with inline SVG icons, read from `src/data/social.ts`
+- Copyright year is generated at build time
 
 **Script slots**:
-- Common scripts (nav scroll shadow) run on all pages
-- Named `scripts` slot for page-specific JavaScript
+- Named `scripts` slot for page-specific JavaScript (currently unused)
 
-**Why this matters**: Eliminates previous duplication where nav/footer HTML was copied across pages. Now a single edit to `BaseLayout.astro` updates all pages.
+**Why this matters**: A single edit to `BaseLayout.astro` updates all pages.
 
 ---
 
@@ -66,15 +67,23 @@ All pages use `BaseLayout.astro` (`src/layouts/BaseLayout.astro`) which provides
 
 The site uses component-based architecture for repeated UI patterns:
 
-**ProjectCard.astro**:
-- Props: `title`, `description`, `url`, `image`, `altText`, `techStack`
-- Displays project screenshot, title, description, and tech details
-- Clickable card opens project in new tab
+**ProjectCrate.astro** (home page):
+- Props: `projects`
+- Shows side projects as record sleeves in a crate; the names of the sleeves behind peek over the top
+- Previous/Next buttons, click a peeking sleeve to jump to it, swipe on phones
+- Has its own scoped styles and script; respects reduced motion and announces the current project to screen readers
+
+**ProjectCard.astro** (/projects):
+- Props: the `Project` fields (`title`, `description`, `url`, `image`, `altText`, `techStack`)
+- One row per project: screenshot in an ink frame on a blue dot tint, title linking to the project, description, and "How it's built"
 
 **TestimonialCard.astro**:
-- Props: `quote`, `name`, `nameUrl`, `role`, `className`
-- Displays testimonial quote with author attribution
-- Linked author names for LinkedIn profiles
+- Props: the `Testimonial` fields plus `variant` (`'lead'` for the big opening quote, `'standard'` otherwise)
+- Quote with the author's name (linked to LinkedIn) and role
+
+**PostList.astro**:
+- Props: `posts`
+- Dated list of blog posts, used on the home page and the blog index
 
 **Benefits**:
 - Add new projects/testimonials by just adding data objects
@@ -85,36 +94,35 @@ The site uses component-based architecture for repeated UI patterns:
 
 ### Data-Driven Pages
 
-Projects and testimonials follow a data-driven pattern:
+Content that appears on more than one page lives in `src/data/`, so every page reads from one source:
 
-**Projects** (`src/pages/projects.astro`):
-```javascript
-const projects = [
-  {
-    title: 'Project Name',
-    description: 'What it does',
-    url: 'https://...',
-    image: importedImg,
-    altText: 'Descriptive alt text',
-    techStack: 'How it was built'
-  },
-  // ... more projects
-];
+**Projects** (`src/data/projects.ts`), newest first:
+```typescript
+{
+  title: 'Project Name',
+  summary: 'One plain-text sentence for the home page',
+  description: 'Full description (may contain HTML links)',
+  url: 'https://...',
+  image: importedImg,
+  altText: 'Descriptive alt text',
+  techStack: 'How it was built (may contain HTML links)'
+}
 ```
 
-**Testimonials** (`src/pages/testimonials.astro`):
-```javascript
-const testimonials = [
-  {
-    quote: "Testimonial text",
-    name: "Person Name",
-    nameUrl: "https://...",
-    role: "Title, Company",
-    className: "testimonial-1"
-  },
-  // ... more testimonials
-];
+**Testimonials** (`src/data/testimonials.ts`):
+```typescript
+{
+  quote: "Full testimonial text",
+  snippet: "Optional shorter excerpt for the home page",
+  name: "Person Name",
+  nameUrl: "https://...",
+  role: "Title, Company"
+}
 ```
+- `leadTestimonialName` picks the big opening quote on /testimonials
+- `homeFeaturedNames` picks the snippets on the home page (a misspelled name fails the build with a clear message)
+
+**Social links** (`src/data/social.ts`): label, URL and Font Awesome icon path for each footer link.
 
 **Why this pattern**:
 - No HTML duplication - data is mapped to components
@@ -157,30 +165,16 @@ import myImage from '../assets/my-image.jpg';
 
 ### JavaScript Organization
 
-JavaScript is organized for optimal performance and maintainability:
+The site ships very little JavaScript:
 
-**Common scripts** (in `BaseLayout.astro`):
-- Navigation scroll shadow effect
-- Runs on every page
-- Inlined with `is:inline` attribute
+- **Home page project crate** (`ProjectCrate.astro`): the only interactive script. It's a regular Astro `<script>`, so Astro bundles it as a small module.
+- **Everything else** is static HTML and CSS. The hero's "settle" animation on page load is pure CSS.
 
-**Page-specific scripts** (in individual pages):
-- Testimonials/Projects: Fade-in animations with IntersectionObserver
-- Project cards: Click handling to open in new tab
-- Blog: None (static content)
-- Uses named `scripts` slot in BaseLayout
-
-**Why inline scripts**:
-- Avoids bundling overhead
-- Faster page loads (no extra HTTP request)
-- Appropriate for small scripts
-- Uses `is:inline` directive to prevent Astro processing
-
-**Client-side features**:
-- Smooth scrolling for anchor links
-- Intersection Observer for fade-in animations
-- Dynamic navigation shadow based on scroll position
-- Project card click handling (respects inner links)
+**Motion rules** (from the redesign):
+- One orchestrated moment: the pink layers settling on the home page hero
+- Hover/focus states and the crate respond only to the visitor's own actions
+- No scroll-triggered fade-ins, draggable cards or magnetic buttons
+- Everything respects `prefers-reduced-motion`
 
 ---
 
@@ -216,13 +210,15 @@ Post content in markdown...
 
 **Rendering**:
 - Posts use `BlogPost.astro` layout
-- Layout provides: Header with back link, formatted date, article wrapper, footer
+- Layout provides: Header with back link, title, formatted date, article text in Newsreader (lines kept under ~75 characters), footer
 - BlogPost layout passes SEO data to BaseLayout (canonical URL, OG images, article meta tags, BlogPosting schema)
 
+**Helpers** (`src/utils/posts.ts`):
+- `getSortedPosts()`: all posts, newest first
+- `formatDate()`: formats dates in UTC, so a build on a US-time-zone laptop shows the same date as Netlify's build
+
 **Blog index** (`src/pages/blog/index.astro`):
-- Fetches all posts with `getCollection('blog')`
-- Sorts by date (newest first)
-- Displays as list with links
+- Posts grouped by year, newest first, each group using `PostList`
 
 **SEO enhancements**:
 - Each post has unique canonical URL
@@ -234,61 +230,59 @@ Post content in markdown...
 
 ### Design System
 
-The site uses a cohesive design system defined primarily in `public/styles.css`:
+The site looks like it was printed on a small two-color risograph press. Tokens live at the top of `public/styles.css`.
 
-**Color Palette**:
-- Primary accent: Forest green `#2D6A4F`
-- Backgrounds: Cream/beige tones (`#FAF8F2`, `#F0EBE3`)
-- Text: Dark gray/black for readability
-- Links: Primary accent color with hover states
+**Colors**:
+
+| Token | Hex | Used for |
+|---|---|---|
+| `--paper` | `#FBFBF8` | Page background (cool white, not cream) |
+| `--ink` | `#1E2735` | Body text, headings, the hero name (14.5:1) |
+| `--ink-soft` | `#435060` | Secondary text, dates, captions (~8:1) |
+| `--blue` | `#0078BF` | Links, the photo's blue ink, footer (4.6:1) |
+| `--pink` | `#FF48B0` | Decoration only. **Never used for text** (3:1) |
+| `--rule` | `#C9D3DD` | Thin dividers |
+
+- Where pink and blue overlap, `mix-blend-mode: multiply` makes them print purple/navy like real riso overprint
+- Don't add green or a cream background
 
 **Typography**:
-- Headings: Instrument Serif (serif, elegant)
-- Body text: Source Sans 3 (sans-serif, readable)
-- Font loading: Preconnected Google Fonts for performance
+- Display: Bricolage Grotesque (variable width and weight), for the name, headings, nav and labels
+- Body: Newsreader (variable optical size, weights 400 to 700, italic), ~19px desktop / 17px small phones
+- Both from Google Fonts; no icon font (social icons are inline SVGs)
 
-**Spacing**:
-- Consistent spacing scale using CSS custom properties
-- Generous whitespace for readability
-- Responsive spacing adjustments at breakpoints
+**Signature details**:
+- Home hero: two-ink photo (blue photo layer + offset pink halftone), a pink record peeking out, and the name in dark ink with a paper-colored outline and an offset pink "ghost"
+- Inner page titles carry a smaller pink ghost
+- Thin ink rules (`1.5px solid var(--ink)`) separate sections; `--rule` for lighter dividers
+- Subtle paper grain over the whole page (`body::after`)
+- No rounded cards, drop shadows or gradient washes
+- Avoid generic template details: no tracked-out ALL-CAPS labels, no "A · B · C" strings, no arrows appended to links, no monospace labels
 
-**Layout**:
-- Fixed navigation bar (always visible)
-- Max-width content containers (prevents overly wide text)
-- Centered layouts with padding
-- Grid layouts for projects and testimonials
+**Copy**:
+- Plain headings (About, Projects, Testimonials, Blog/Writing); no record-sleeve wording in the copy. The music nod lives in the visuals.
 
 **Component styling**:
 - Global styles in `public/styles.css`
-- Component-specific styles use `<style>` tags in `.astro` files
+- Component-specific styles use `<style>` tags in `.astro` files (e.g. `ProjectCrate.astro`)
 - CSS scoped to components automatically by Astro
 
 ---
 
 ### Responsive Design
 
-The site is fully responsive with a mobile-first approach:
-
 **Breakpoints**:
-- **968px**: Tablet/desktop transition
-  - Hero layout: Side-by-side → stacked
-  - Testimonials grid: 3 columns → 2 columns
-  - Navigation: Full links visible
-
-- **600px**: Mobile
-  - Further spacing reduction
-  - Smaller font sizes
-  - Single-column layouts
-  - Testimonials grid: 2 columns → 1 column
+- **860px**: two-column layouts stack. The hero stacks as photo, name, intro, then credit line.
+- **520px**: small phones. Body text drops to 17px and the nav stacks the wordmark above the links.
 
 **Responsive techniques**:
 - CSS media queries in `styles.css`
-- Flexible grid layouts (`display: grid`)
-- Relative units (rem, %, vh/vw)
-- Mobile-friendly touch targets
+- Fluid type and spacing with `clamp()`
+- Container query units inside the crate's sleeves so their labels scale with the sleeve
+- Tested from 375px phones to wide desktop with no horizontal scrolling
 
 **Images**:
-- Astro Image component handles responsive srcsets automatically
+- Astro Image component generates responsive srcsets
 - WebP format for smaller file sizes on all devices
 - Lazy loading for below-the-fold images
 
@@ -334,9 +328,8 @@ The site is fully responsive with a mobile-first approach:
 
 **Runtime optimizations**:
 - Lazy loading for images
-- Inline critical scripts (no extra HTTP requests)
 - Preconnected external domains (Google Fonts)
-- Minimal JavaScript (only what's needed)
+- Minimal JavaScript (only the home page project crate)
 
 **Deployment**:
 - Netlify edge network (global CDN)
@@ -350,6 +343,8 @@ The site is fully responsive with a mobile-first approach:
 **File organization**:
 - Pages in `src/pages/` (auto-routed)
 - Reusable components in `src/components/`
+- Shared data (projects, testimonials, social links) in `src/data/`
+- Helpers (blog post sorting and dates) in `src/utils/`
 - Layouts in `src/layouts/`
 - Blog content in `src/content/blog/`
 - Optimized images in `src/assets/`

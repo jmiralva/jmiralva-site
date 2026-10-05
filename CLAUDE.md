@@ -29,9 +29,9 @@ This is a personal portfolio website for Jorge Mir Alvarez, a product manager ba
 
 - **Framework**: Astro 5.16+ (static site generator)
 - **Content**: Markdown for blog posts, Astro components for pages
-- **Styling**: Custom CSS with CSS variables, responsive design using media queries
-- **Fonts**: Google Fonts (Instrument Serif, Source Sans 3)
-- **Icons**: Font Awesome 6.5.1
+- **Styling**: Custom CSS with CSS variables, responsive design using media queries. Riso two-ink print look (see [Design system](context/ARCHITECTURE.md#design-system))
+- **Fonts**: Google Fonts (Bricolage Grotesque for display, Newsreader for body text)
+- **Icons**: Font Awesome Free icons embedded as inline SVGs in `src/data/social.ts` (no icon font loaded)
 - **Deployment**: Netlify (configured via `netlify.toml`)
 - **Build**: Node.js (npm) with Astro CLI
 
@@ -41,16 +41,25 @@ This is a personal portfolio website for Jorge Mir Alvarez, a product manager ba
 /
 ├── src/
 │   ├── pages/              # Astro pages (generate routes)
-│   │   ├── index.astro     # Home page
+│   │   ├── index.astro     # Home page (hero, project crate, testimonial snippets, recent posts)
 │   │   ├── about.astro     # About page
 │   │   ├── projects.astro  # Projects page (data-driven)
 │   │   ├── testimonials.astro  # Testimonials page (data-driven)
+│   │   ├── rss.xml.js      # RSS feed
 │   │   └── blog/
 │   │       ├── index.astro         # Blog index/listing
 │   │       └── [...slug].astro     # Dynamic blog post route
 │   ├── components/         # Reusable components
-│   │   ├── ProjectCard.astro       # Project card component
-│   │   └── TestimonialCard.astro   # Testimonial card component
+│   │   ├── ProjectCrate.astro      # Home page project "record crate" flipper
+│   │   ├── ProjectCard.astro       # Project row on /projects
+│   │   ├── TestimonialCard.astro   # Testimonial quote
+│   │   └── PostList.astro          # Dated list of blog posts
+│   ├── data/               # Shared content used by several pages
+│   │   ├── projects.ts     # Side projects
+│   │   ├── testimonials.ts # Testimonials (+ which ones the home page features)
+│   │   └── social.ts       # Footer social links and icons
+│   ├── utils/
+│   │   └── posts.ts        # Sorted blog posts and date formatting
 │   ├── layouts/
 │   │   ├── BaseLayout.astro    # Shared layout (nav, footer, meta)
 │   │   └── BlogPost.astro      # Blog post layout
@@ -139,19 +148,20 @@ Netlify automatically builds and deploys when pushing to the main branch:
 - Changes automatically apply to all pages
 
 ### Updating Social Links
-- Edit the `.social-links` section in `src/layouts/BaseLayout.astro`
-- Changes automatically apply to all pages
+- Edit the `socialLinks` array in `src/data/social.ts` (label, URL, and the icon's SVG path from Font Awesome Free)
+- Changes automatically apply to the footer on all pages
 
 ### Adding a New Project
-1. Add project image to `src/assets/projects/`
-2. Import the image in `src/pages/projects.astro`:
+1. Add project image to `src/assets/projects/` (portrait or landscape both work; images sit in a fixed frame)
+2. Import the image in `src/data/projects.ts`:
    ```javascript
    import newProjectImg from '../assets/projects/new-project.png';
    ```
-3. Add project object to the `projects` array:
+3. Add a project object to the `projects` array (newest first):
    ```javascript
    {
      title: 'Project Name',
+     summary: 'One plain-text sentence for the home page',
      description: 'What it does',
      url: 'https://project-url.com',
      image: newProjectImg,
@@ -159,20 +169,20 @@ Netlify automatically builds and deploys when pushing to the main branch:
      techStack: 'How it was built'
    }
    ```
-4. The `ProjectCard` component will automatically render it
+4. It appears automatically in the home page crate and on /projects. The crate shows up to four sleeves at once; any extras wait at the back until someone flips to them
 
 ### Adding a New Testimonial
-Add a testimonial object to the `testimonials` array in `src/pages/testimonials.astro`:
+Add a testimonial object to the `testimonials` array in `src/data/testimonials.ts`:
 ```javascript
 {
   quote: "What they said about you",
+  snippet: "Optional short excerpt for the home page",
   name: "Person Name",
   nameUrl: "https://linkedin.com/in/person",
-  role: "Their Title, Company",
-  className: "testimonial-11"  // Increment the number
+  role: "Their Title, Company"
 }
 ```
-The `TestimonialCard` component will automatically render it
+It appears on /testimonials automatically. To feature it on the home page, add the name to `homeFeaturedNames` in the same file. If a snippet starts or ends mid-sentence, show the cut with "…".
 
 ### Adding Optimized Images
 1. Place images in `src/assets/` (NOT `public/`)
@@ -193,9 +203,9 @@ The `TestimonialCard` component will automatically render it
 
 **Shared Layout Component**: `BaseLayout.astro` provides HTML structure, navigation, footer, meta tags, and SEO enhancements for all pages.
 
-**Reusable Components**: `ProjectCard` and `TestimonialCard` components accept props, making it easy to add items by updating data arrays.
+**Reusable Components**: `ProjectCrate`, `ProjectCard`, `TestimonialCard` and `PostList` accept props, making it easy to add items by updating data arrays.
 
-**Data-Driven Pages**: Projects and testimonials are defined as arrays of objects, then mapped to components - no HTML duplication.
+**Data-Driven Pages**: Projects, testimonials and social links live in `src/data/` as arrays of objects, mapped to components on every page that needs them - no HTML duplication.
 
 **Image Optimization**: Images in `src/assets/` are automatically converted to WebP, resized, lazy loaded, and cache-busted.
 
@@ -205,6 +215,7 @@ The `TestimonialCard` component will automatically render it
 
 - **Build process required**: This is an Astro site with a build step (not a static HTML site)
 - **Component architecture**: Navigation, footer, project cards, and testimonials use reusable components
+- **Design rules**: Pink (`--pink`) is decoration only and never used for text. Keep the copy free of record-sleeve puns; the music nod lives in the visuals
 - **Image locations matter**: `src/assets/` for optimized images, `public/` for static files
 - **Content collections**: Blog posts use Astro's content collections for type safety
 - **Static output**: Site is fully static (no server-side rendering)

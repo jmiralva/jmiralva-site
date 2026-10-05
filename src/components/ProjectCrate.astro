@@ -110,12 +110,14 @@ const widthsFor = (width: number) => [...new Set([480, 960].map((w) => Math.min(
   .sleeve[data-pos="1"] { --y: -12.5%; --s: .955; z-index: 3; }
   .sleeve[data-pos="2"] { --y: -25%; --s: .91; z-index: 2; }
   .sleeve[data-pos="3"] { --y: -37.5%; --s: .865; z-index: 1; }
+  /* With more than four projects, the extras wait hidden behind the fourth */
+  .sleeve:not([data-pos="0"], [data-pos="1"], [data-pos="2"], [data-pos="3"], [data-pos="out"]) { --y: -37.5%; --s: .865; z-index: 0; }
   /* Tipped forward toward the viewer, on its way to the back of the crate */
   .sleeve[data-pos="out"] { --y: 6%; --r: -75deg; z-index: 5; opacity: 0; }
   .sleeve.no-anim { transition: none; }
 
-  .sleeve:is([data-pos="1"], [data-pos="2"], [data-pos="3"]) { cursor: pointer; }
-  .sleeve:is([data-pos="1"], [data-pos="2"], [data-pos="3"]):hover { translate: 0 -3%; }
+  .sleeve:not([data-pos="0"], [data-pos="out"]) { cursor: pointer; }
+  .sleeve:not([data-pos="0"], [data-pos="out"]):hover { translate: 0 -3%; }
 
   .sleeve-band {
     flex: none;
