@@ -135,16 +135,23 @@ Netlify automatically builds and deploys when pushing to the main branch:
    import BaseLayout from '../layouts/BaseLayout.astro';
    ---
 
-   <BaseLayout title="Page Title" description="Description">
-     <main>
+   <BaseLayout title="Page Title" description="Description" canonicalURL="https://jmiralva.me/pagename">
+     <header class="page-head">
+       <div class="wrap">
+         <h1 class="page-title">Page Title</h1>
+         <p class="page-intro">Optional intro line</p>
+       </div>
+     </header>
+     <div class="wrap page-body">
        <!-- Your content -->
-     </main>
+     </div>
    </BaseLayout>
    ```
-3. Add navigation link to `BaseLayout.astro` if needed
+   Don't add a `<main>` tag: `BaseLayout` already wraps every page in `<main id="main">` (the skip link targets it).
+3. Add the page to the `navLinks` list in `BaseLayout.astro` if it belongs in the nav
 
 ### Updating Navigation
-- Edit the `.nav-links` section in `src/layouts/BaseLayout.astro`
+- Edit the `navLinks` list in `src/layouts/BaseLayout.astro`
 - Changes automatically apply to all pages
 
 ### Updating Social Links

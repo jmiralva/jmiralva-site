@@ -79,7 +79,7 @@ const widthsFor = (width: number) => [...new Set([480, 960].map((w) => Math.min(
     aspect-ratio: 1 / 1.25;
     perspective: 1100px;
     perspective-origin: 50% 20%;
-    touch-action: pan-y;
+    touch-action: pan-y pinch-zoom; /* sideways swipes flip sleeves; scrolling and zoom still work */
     user-select: none;
     -webkit-user-select: none;
   }
