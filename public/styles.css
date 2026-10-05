@@ -841,6 +841,25 @@ h1, h2, h3, h4 {
     .nav-links { gap: 20px; }
     .wordmark { padding-bottom: 0; }
 
+    /* Footer: icons only, in one evenly spaced row; names stay for screen readers */
+    .social-links { justify-content: space-between; gap: 0; }
+    .social-links a {
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        min-height: 40px;
+    }
+    .social-links svg { width: 24px; height: 24px; }
+    .social-links span {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+    }
+
     .lead-quote { padding-left: 0; padding-top: 56px; }
     .lead-quote::before { top: -.12em; }
 
