@@ -1,31 +1,16 @@
 ---
-import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import { getSortedPosts } from '../../utils/posts';
 
-const posts = (await getCollection('blog')).sort(
-  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
-);
+const posts = await getSortedPosts();
 
-const latestPost = posts[0];
-const olderPosts = posts.slice(1);
-
-// Helper function to format date for featured post (December 20, 2025)
-function formatLongDate(date: Date) {
-  return new Date(date).toLocaleDateString('en-us', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  });
-}
-
-// Helper function to format date for list (Dec 15, 2025)
-function formatShortDate(date: Date) {
-  return new Date(date).toLocaleDateString('en-us', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-  });
-}
+// Group posts by year, newest first
+const years = [...new Set(posts.map((post) => post.data.pubDate.getUTCFullYear()))];
+const postsByYear = years.map((year) => ({
+  year,
+  posts: posts.filter((post) => post.data.pubDate.getUTCFullYear() === year),
+}));
 ---
 
 <BaseLayout
@@ -33,45 +18,23 @@ function formatShortDate(date: Date) {
   description="Thoughts and musings on product management, technology, and more."
   canonicalURL="https://jmiralva.me/blog"
 >
-  <div class="blog-page-wrapper">
+  <header class="page-head">
+    <div class="wrap">
+      <h1 class="page-title">Blog</h1>
+      <p class="page-intro">Infrequent reflections on software, life, culture, and whatever is on my mind.</p>
+    </div>
+  </header>
 
-    <header class="blog-header">
-      <span class="section-label">Blog</span>
-      <h1>Thoughts and musings</h1>
-      <p class="subtitle">Infrequent reflections on software, life, culture, and whatever is on my mind.</p>
-    </header>
-
+  <div class="wrap page-body">
     {posts.length === 0 ? (
-      <p style="text-align: center; color: var(--color-text-muted); padding: 3rem 1rem;">
-        No posts yet. Check back soon!
-      </p>
+      <p>No posts yet. Check back soon!</p>
     ) : (
-      <>
-        {latestPost && (
-          <a href={`/blog/${latestPost.slug}`} class="featured-post">
-            <span class="featured-label">Latest</span>
-            <span class="post-title">{latestPost.data.title}</span>
-            <div class="featured-meta">
-              <span>{formatLongDate(latestPost.data.pubDate)}</span>
-            </div>
-            <p class="featured-summary">{latestPost.data.description}</p>
-          </a>
-        )}
-
-        {olderPosts.length > 0 && (
-          <ul class="post-list">
-            {olderPosts.map((post) => (
-              <li class="post-item">
-                <a href={`/blog/${post.slug}`}>
-                  <span class="post-date">{formatShortDate(post.data.pubDate)}</span>
-                  <span class="post-title">{post.data.title}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        )}
-      </>
+      postsByYear.map(({ year, posts }) => (
+        <section class="year-group split" aria-labelledby={`year-${year}`}>
+          <h2 class="year-title" id={`year-${year}`}>{year}</h2>
+          <PostList posts={posts} />
+        </section>
+      ))
     )}
-
   </div>
 </BaseLayout>

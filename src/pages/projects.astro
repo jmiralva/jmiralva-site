@@ -1,36 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ProjectCard from '../components/ProjectCard.astro';
-import wanderlustImg from '../assets/projects/wanderlust-travel-app.png';
-import platesImg from '../assets/projects/plates-with-p-chicago-restaurant-week-guide.png';
-import notionImg from '../assets/projects/notion-job-search-workspace.png';
-
-const projects = [
-  {
-    title: 'Wanderlust',
-    description: 'An AI travel planner that helps you find the perfect destination for your next trip and discover things to do there.',
-    url: 'https://wnderlust.lovable.app/',
-    image: wanderlustImg,
-    altText: 'Wanderlust travel app showing personalized destination recommendations with AI-powered suggestions',
-    techStack: 'Built using Lovable and Supabase. Integrates with OpenAI for travel recommendations and content, Unsplash for location images, and Google Maps for the origin autocomplete.'
-  },
-  {
-    title: 'Plates With P\'s Chicago Restaurant Week 2026 Guide',
-    description: 'A collaboration with Chicago influencer <a href="https://www.instagram.com/paigeserena/" target="_blank" rel="noopener noreferrer">Paige Serena</a> to identify the best deals for Chicago Restaurant Week 2026. Featured on Block Club Chicago's <a href="https://blockclubchicago.org/2026/01/20/looking-for-chicago-restaurant-week-2026-deals-these-chicagoans-found-them/" target="_blank" rel="noopener noreferrer">Restaurant Week feature</a>.',
-    url: 'https://pwp-chicago-restaurant-week.netlify.app/',
-    image: platesImg,
-    altText: 'Chicago Restaurant Week 2026 guide showing a curated list of restaurant deals with pricing and menu details',
-    techStack: 'Paige built a spreadsheet breaking down the restaurants, and I used Claude Opus to turn it into an website.'
-  },
-  {
-    title: 'Job Tracking Workspace',
-    description: 'A complete job tracking workspace for candidates applying to jobs. Candidates can track job applications, interviews, updates to their processes, from a centralized space. The project is available as pay-what-you-want on Gumroad.',
-    url: 'https://jmiralva.gumroad.com/l/notion-job-search-workspace',
-    image: notionImg,
-    altText: 'Notion job search workspace dashboard displaying application tracking, interview status, and job listing database',
-    techStack: 'Built entirely in Notion, and uses the <a href="https://savetonotion.so/" target="_blank" rel="noopener noreferrer">Save to Notion</a> Chrome extension to save job listings to a database.'
-  }
-];
+import { projects } from '../data/projects';
 ---
 
 <BaseLayout
@@ -38,60 +9,18 @@ const projects = [
   description="Side projects and tools built by Jorge Mir Alvarez."
   canonicalURL="https://jmiralva.me/projects"
 >
-  <!-- Projects Section -->
-  <main class="projects">
-    <div class="projects-header">
-      <span class="section-label">Projects</span>
-      <h1>Things I've built for funsies in my spare time</h1>
+  <header class="page-head">
+    <div class="wrap">
+      <h1 class="page-title">Projects</h1>
+      <p class="page-intro">Things I've built for funsies in my spare time.</p>
     </div>
+  </header>
 
-    <div class="projects-grid">
+  <div class="wrap page-body">
+    <ul class="project-list">
       {projects.map((project) => (
-        <ProjectCard {...project} />
+        <li><ProjectCard {...project} /></li>
       ))}
-    </div>
-  </main>
-
-  <script slot="scripts" is:inline>
-    // Fade in project cards on scroll
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.1
-    };
-
-    const fadeInObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.style.opacity = '1';
-          entry.target.style.transform = 'translateY(0)';
-          fadeInObserver.unobserve(entry.target);
-        }
-      });
-    }, observerOptions);
-
-    // Apply to project cards
-    document.querySelectorAll('.project-card').forEach((el, index) => {
-      el.style.opacity = '0';
-      el.style.transform = 'translateY(30px)';
-      el.style.transition = `opacity 0.6s ease ${index * 0.15}s, transform 0.6s ease ${index * 0.15}s`;
-      fadeInObserver.observe(el);
-    });
-
-    // Handle project card clicks while allowing inner links to work
-    document.querySelectorAll('.project-card').forEach(card => {
-      card.addEventListener('click', (e) => {
-        // Don't navigate if clicking on a link
-        if (e.target.tagName === 'A' || e.target.closest('a')) {
-          return;
-        }
-
-        // Get the project URL and open in new tab
-        const url = card.getAttribute('data-href');
-        if (url) {
-          window.open(url, '_blank', 'noopener,noreferrer');
-        }
-      });
-    });
-  </script>
+    </ul>
+  </div>
 </BaseLayout>

@@ -1,20 +1,24 @@
-// Testimonials. /testimonials shows all of them, with the `lead` one as the big
-// opening quote. The home page shows the lead quote plus the names in `homeFeatured`.
-// If a quote is shortened anywhere, show the cut with "…".
+// Testimonials. /testimonials shows all of them in full, with the lead one as the
+// big opening quote. The home page shows only the names in `homeFeaturedNames`,
+// using `snippet` when there is one. If a snippet cuts into a sentence, show the
+// cut with "…".
 
 export interface Testimonial {
   quote: string;
+  /** Shorter excerpt for the home page */
+  snippet?: string;
   name: string;
   nameUrl: string;
   role: string;
 }
 
 export const leadTestimonialName = 'Paul Ford';
-export const homeFeaturedNames = ['Chris LoSacco', 'Andrew Possehl'];
+export const homeFeaturedNames = ['Vicky Volvovski', 'Chris LoSacco', 'Bronwyn Larsen'];
 
 export const testimonials: Testimonial[] = [
   {
     quote: "Jorge is a driving force behind many improvements on the PM team. Some are behind the scenes, which help our team operate smoothly. Others are big & experimental. I'm consistently impressed by the thoughtfulness and thoroughness that he brings to his work.",
+    snippet: "I'm consistently impressed by the thoughtfulness and thoroughness that he brings to his work.",
     name: "Vicky Volvovski",
     nameUrl: "https://www.linkedin.com/in/vickyvolvovski/",
     role: "Head of Product, Conduit Tech"
@@ -44,6 +48,7 @@ export const testimonials: Testimonial[] = [
     role: "Principal Product Designer, Slack"
   },
   {
+    snippet: "…an outstanding product manager and a joy to work with.",
     quote: "Jorge is an outstanding product manager and a joy to work with. As a UX researcher, I was deeply impressed by Jorge's ability to take stock of a business problem, and weave together a strategy that included customer research, technical requirements, and design needs. Jorge values the perspectives of his team: he listens attentively and implements changes thoughtfully.",
     name: "Bronwyn Larsen",
     nameUrl: "https://www.linkedin.com/in/bronwyn-larsen-81750242/",

@@ -6,7 +6,7 @@ import TestimonialCard from '../components/TestimonialCard.astro';
 import PostList from '../components/PostList.astro';
 import headshotImg from '../assets/headshot.jpg';
 import { projects } from '../data/projects';
-import { leadTestimonial, homeTestimonials } from '../data/testimonials';
+import { homeTestimonials } from '../data/testimonials';
 import { getSortedPosts } from '../utils/posts';
 
 const recentPosts = (await getSortedPosts()).slice(0, 3);
@@ -85,10 +85,9 @@ const recentPosts = (await getSortedPosts()).slice(0, 3);
         <h2 class="section-title" id="testimonials-heading">Testimonials</h2>
         <p class="band-intro">Nice things people have said about me or what it's like to work with me.</p>
       </div>
-      <TestimonialCard {...leadTestimonial} variant="lead" />
-      <ul class="quote-grid">
+      <ul class="quote-grid quote-grid--three">
         {homeTestimonials.map((testimonial) => (
-          <li><TestimonialCard {...testimonial} /></li>
+          <li><TestimonialCard {...testimonial} quote={testimonial.snippet ?? testimonial.quote} /></li>
         ))}
       </ul>
       <p class="band-foot"><a class="more-link" href="/testimonials">Read all testimonials</a></p>
