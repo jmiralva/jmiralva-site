@@ -22,17 +22,18 @@ const {
 } = Astro.props;
 
 const navLinks = [
-  { href: '/about', label: 'About' },
-  { href: '/projects', label: 'Projects' },
-  { href: '/testimonials', label: 'Testimonials' },
-  { href: '/blog', label: 'Blog' },
+  { href: '/about/', label: 'About' },
+  { href: '/projects/', label: 'Projects' },
+  { href: '/testimonials/', label: 'Testimonials' },
+  { href: '/blog/', label: 'Blog' },
 ];
 
-// Marks the nav link for the current page ("page") or section, e.g. a blog post ("true")
-const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+// Marks the nav link for the current page ("page") or section, e.g. a blog post ("true").
+// Addresses always end in "/" (Netlify redirects /about to /about/), so links use that form too.
+const currentPath = Astro.url.pathname.replace(/\/?$/, '/');
 function ariaCurrent(href: string) {
   if (currentPath === href) return 'page';
-  if (currentPath.startsWith(href + '/')) return 'true';
+  if (currentPath.startsWith(href)) return 'true';
   return undefined;
 }
 

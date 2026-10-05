@@ -76,7 +76,7 @@ const recentPosts = (await getSortedPosts()).slice(0, 2);
         <p class="band-intro">Things I've built for funsies in my spare time.</p>
       </div>
       <ProjectCrate projects={projects} />
-      <p class="band-foot"><a class="more-link" href="/projects">See all projects</a></p>
+      <p class="band-foot"><a class="more-link" href="/projects/">See all projects</a></p>
     </div>
   </section>
 
@@ -91,7 +91,7 @@ const recentPosts = (await getSortedPosts()).slice(0, 2);
           <li><TestimonialCard {...testimonial} quote={testimonial.snippet ?? testimonial.quote} /></li>
         ))}
       </ul>
-      <p class="band-foot"><a class="more-link" href="/testimonials">Read all testimonials</a></p>
+      <p class="band-foot"><a class="more-link" href="/testimonials/">Read all testimonials</a></p>
     </div>
   </section>
 
@@ -103,7 +103,7 @@ const recentPosts = (await getSortedPosts()).slice(0, 2);
       </div>
       <div>
         <PostList posts={recentPosts} />
-        <p class="band-foot"><a class="more-link" href="/blog">All posts</a></p>
+        <p class="band-foot"><a class="more-link" href="/blog/">All posts</a></p>
       </div>
     </div>
   </section>

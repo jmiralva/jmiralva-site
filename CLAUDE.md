@@ -135,7 +135,7 @@ Netlify automatically builds and deploys when pushing to the main branch:
    import BaseLayout from '../layouts/BaseLayout.astro';
    ---
 
-   <BaseLayout title="Page Title" description="Description" canonicalURL="https://jmiralva.me/pagename">
+   <BaseLayout title="Page Title" description="Description" canonicalURL="https://jmiralva.me/pagename/">
      <header class="page-head">
        <div class="wrap">
          <h1 class="page-title">Page Title</h1>
@@ -148,6 +148,7 @@ Netlify automatically builds and deploys when pushing to the main branch:
    </BaseLayout>
    ```
    Don't add a `<main>` tag: `BaseLayout` already wraps every page in `<main id="main">` (the skip link targets it).
+   Write page addresses with a trailing slash (`/pagename/`), in links and in `canonicalURL`: Netlify redirects `/pagename` to `/pagename/`.
 3. Add the page to the `navLinks` list in `BaseLayout.astro` if it belongs in the nav
 
 ### Updating Navigation

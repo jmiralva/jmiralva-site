@@ -43,7 +43,7 @@ export const projects: Project[] = [
     url: 'https://pwp-chicago-restaurant-week.netlify.app/',
     image: platesImg,
     altText: 'Chicago Restaurant Week 2026 guide showing a curated list of restaurant deals with pricing and menu details',
-    techStack: 'Paige built a spreadsheet breaking down the restaurants, and I used Claude Opus to turn it into an website.'
+    techStack: 'Paige built a spreadsheet breaking down the restaurants, and I used Claude Opus to turn it into a website.'
   },
   {
     title: 'Job Tracking Workspace',

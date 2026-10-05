@@ -1,5 +1,5 @@
 ---
-title: 'On product managers as editors and refining taste sample'
+title: 'On product managers as editors and refining taste'
 description: ''
 pubDate: 2024-06-11
 ---

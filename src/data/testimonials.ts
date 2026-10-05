@@ -37,7 +37,7 @@ export const testimonials: Testimonial[] = [
   },
   {
     quote: "Jorge is a thoughtful leader and good at identifying problems from their origin and addressing them. Anyone would be lucky to have him on their team!",
-    name: "Vinod Persiasamy",
+    name: "Vinod Periasamy",
     nameUrl: "https://www.linkedin.com/in/vinod-periasamy/",
     role: "Senior Engineering Manager, Multi Media, LLC"
   },

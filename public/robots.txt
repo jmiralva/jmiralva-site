@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://jmiralva.me/sitemap.xml
+Sitemap: https://jmiralva.me/sitemap-index.xml

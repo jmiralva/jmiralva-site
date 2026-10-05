@@ -15,7 +15,7 @@ const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
 // Generate canonical URL and OG image for this blog post.
 // Share previews need a full URL, so a heroImage path like '/images/x.jpg' is made absolute.
 const slug = Astro.url.pathname.split('/').filter(Boolean).pop();
-const canonicalURL = `https://jmiralva.me/blog/${slug}`;
+const canonicalURL = `https://jmiralva.me/blog/${slug}/`;
 const ogImage = new URL(heroImage || '/assets/og-image.jpg', 'https://jmiralva.me').href;
 ---
 
@@ -55,7 +55,7 @@ const ogImage = new URL(heroImage || '/assets/og-image.jpg', 'https://jmiralva.m
   <article>
     <header class="article-head">
       <div class="wrap">
-        <a href="/blog" class="back-link">Back to blog</a>
+        <a href="/blog/" class="back-link">Back to blog</a>
         <h1 class="article-title">{title}</h1>
         <p class="article-meta"><time datetime={isoDate(pubDate)}>{formatDate(pubDate, 'long')}</time></p>
       </div>
@@ -66,7 +66,7 @@ const ogImage = new URL(heroImage || '/assets/og-image.jpg', 'https://jmiralva.m
         <slot />
       </div>
       <footer class="article-foot">
-        <a href="/blog" class="back-link">Back to blog</a>
+        <a href="/blog/" class="back-link">Back to blog</a>
       </footer>
     </div>
   </article>
