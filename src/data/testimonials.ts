@@ -22,12 +22,6 @@ export const homeFeaturedNames = ['Vicky Volvovski', 'Chris LoSacco', 'Bronwyn L
 
 export const testimonials: Testimonial[] = [
   {
-    quote: "Jorge leads the way with the kind of impact that typically takes years. But he's been able to accumulate in less than a year and does it with generosity, vision and infectious energy.",
-    name: "Kate Mortenson",
-    nameUrl: "https://www.linkedin.com/in/kate-m-07a521bb/",
-    role: "Product Manager, Linnworks"
-  },
-  {
     quote: "Jorge is a driving force behind many improvements on the PM team. Some are behind the scenes, which help our team operate smoothly. Others are big & experimental. I'm consistently impressed by the thoughtfulness and thoroughness that he brings to his work.",
     snippet: "I'm consistently impressed by the thoughtfulness and thoroughness that he brings to his work.",
     name: "Vicky Volvovski",
@@ -57,6 +51,12 @@ export const testimonials: Testimonial[] = [
     name: "Grace Sunnell",
     nameUrl: "https://www.linkedin.com/in/gsunnell/",
     role: "Lead Product Designer, Postlight"
+  },
+  {
+    quote: "Jorge leads the way with the kind of impact that typically takes years. But he's been able to accumulate in less than a year and does it with generosity, vision and infectious energy.",
+    name: "Kate Mortenson",
+    nameUrl: "https://www.linkedin.com/in/kate-m-07a521bb/",
+    role: "Product Manager, Linnworks"
   },
   {
     snippet: "…an outstanding product manager and a joy to work with.",
