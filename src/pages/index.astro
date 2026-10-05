@@ -76,8 +76,9 @@ const recentPosts = (await getSortedPosts()).slice(0, 2);
         <h2 class="section-title" id="projects-heading">Side projects</h2>
         <p class="band-intro">Things I've built for funsies in my spare time.</p>
       </div>
-      <ProjectCrate projects={projects} />
-      <p class="band-foot"><a class="more-link" href="/projects/">See all projects</a></p>
+      <ProjectCrate projects={projects}>
+        <p class="band-foot"><a class="more-link" href="/projects/">See all projects</a></p>
+      </ProjectCrate>
     </div>
   </section>
 

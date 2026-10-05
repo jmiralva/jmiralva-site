@@ -2,7 +2,8 @@
 // Home page side projects, shown as record sleeves in a crate. The names of the
 // sleeves behind peek over the top. Next tips the front sleeve forward and drops
 // it at the back; Previous pulls the back one out to the front; clicking a
-// peeking sleeve jumps to it; swiping works on phones.
+// peeking sleeve jumps to it; swiping works on phones. Anything passed between
+// the tags (e.g. a "See all projects" link) goes under the summary.
 import { Image } from 'astro:assets';
 import type { Project } from '../data/projects';
 
@@ -52,14 +53,18 @@ const widthsFor = (width: number) => [...new Set([480, 960].map((w) => Math.min(
     </div>
     <p class="visually-hidden" aria-live="polite" data-announce></p>
 
-    {projects.map((project, i) => (
-      <div class="crate-detail" hidden={i !== 0}>
-        <h3 class="project-title crate-title">
-          <a class="ink-link" href={project.url} target="_blank" rel="noopener noreferrer">{project.title}</a>
-        </h3>
-        <p class="crate-summary">{project.summary}</p>
-      </div>
-    ))}
+    <div class="crate-details">
+      {projects.map((project, i) => (
+        <div class="crate-detail" hidden={i !== 0}>
+          <h3 class="project-title crate-title">
+            <a class="ink-link" href={project.url} target="_blank" rel="noopener noreferrer">{project.title}</a>
+          </h3>
+          <p class="crate-summary">{project.summary}</p>
+        </div>
+      ))}
+    </div>
+
+    <slot />
   </div>
 </div>
 
@@ -188,6 +193,12 @@ const widthsFor = (width: number) => [...new Set([480, 960].map((w) => Math.min(
     color: var(--ink-soft);
     font-variant-numeric: tabular-nums;
   }
+
+  /* All the details share one spot, so the column is always as tall as the
+     longest one and the buttons don't move as you flip */
+  .crate-details { display: grid; }
+  .crate-detail { grid-area: 1 / 1; }
+  .crate-detail[hidden] { display: block; visibility: hidden; }
 
   .crate-title { font-size: clamp(1.75rem, 3.4vw, 2.6rem); }
 
