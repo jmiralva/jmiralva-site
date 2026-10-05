@@ -1,21 +1,20 @@
 ---
-interface Props {
-  quote: string;
-  name: string;
-  nameUrl: string;
-  role: string;
-  className?: string;
+import type { Testimonial } from '../data/testimonials';
+
+interface Props extends Testimonial {
+  /** "lead" is the big opening quote; "standard" is used in the quote grids */
+  variant?: 'lead' | 'standard';
 }
 
-const { quote, name, nameUrl, role, className = '' } = Astro.props;
+const { quote, name, nameUrl, role, variant = 'standard' } = Astro.props;
 ---
 
-<blockquote class={`testimonial ${className}`}>
-  <p>"{quote}"</p>
-  <footer>
-    <cite class="testimonial-name">
-      <a href={nameUrl} target="_blank" rel="noopener noreferrer">{name}</a>
-    </cite>
-    <span class="testimonial-role">{role}</span>
-  </footer>
-</blockquote>
+<figure class={variant === 'lead' ? 'lead-quote' : 'quote'}>
+  <blockquote>
+    <p>{quote}</p>
+  </blockquote>
+  <figcaption class="byline">
+    <a class="ink-link" href={nameUrl} target="_blank" rel="noopener noreferrer">{name}</a><br>
+    {role}
+  </figcaption>
+</figure>

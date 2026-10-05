@@ -1,15 +1,11 @@
 ---
 import { Image } from 'astro:assets';
-import type { ImageMetadata } from 'astro';
+import type { Project } from '../data/projects';
 
-interface Props {
-  title: string;
-  description: string;
-  url: string;
-  image: ImageMetadata;
-  altText: string;
+interface Props extends Project {
+  /** "card" for the home page grid, "row" for the full list on /projects */
+  variant?: 'card' | 'row';
   techLabel?: string;
-  techStack: string;
 }
 
 const {
@@ -18,21 +14,34 @@ const {
   url,
   image,
   altText,
-  techLabel = "How it's built",
-  techStack
+  techStack,
+  variant = 'row',
+  techLabel = "How it's built"
 } = Astro.props;
+
+const Heading = variant === 'card' ? 'h3' : 'h2';
+
+// Responsive sizes, never larger than the original (the SocialCal phone shot is 455px wide)
+const widths = [...new Set([480, 960, 1440].map((w) => Math.min(w, image.width)))];
+const sizes = variant === 'card'
+  ? '(max-width: 860px) 100vw, 540px'
+  : '(max-width: 860px) 100vw, 460px';
 ---
 
-<div class="project-card" data-href={url}>
-  <div class="project-image">
-    <Image src={image} alt={altText} width={800} height={600} />
+<article class={`project project--${variant}`}>
+  <div class="project-frame">
+    <Image src={image} alt={altText} widths={widths} sizes={sizes} />
   </div>
-  <div class="project-content">
-    <h3 class="project-title">{title}</h3>
+  <div class="project-body">
+    <Heading class="project-title">
+      <a class="ink-link" href={url} target="_blank" rel="noopener noreferrer">{title}</a>
+    </Heading>
     <p class="project-description" set:html={description}></p>
-    <div class="project-tech">
-      <span class="tech-label">{techLabel}</span>
-      <p class="tech-stack" set:html={techStack}></p>
-    </div>
+    {variant === 'row' && (
+      <p class="project-tech">
+        <span class="project-tech-label">{techLabel}</span>
+        <span set:html={techStack}></span>
+      </p>
+    )}
   </div>
-</div>
+</article>

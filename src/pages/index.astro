@@ -1,7 +1,15 @@
 ---
 import { Image } from 'astro:assets';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import TestimonialCard from '../components/TestimonialCard.astro';
+import PostList from '../components/PostList.astro';
 import headshotImg from '../assets/headshot.jpg';
+import { projects } from '../data/projects';
+import { leadTestimonial, homeTestimonials } from '../data/testimonials';
+import { getSortedPosts } from '../utils/posts';
+
+const recentPosts = (await getSortedPosts()).slice(0, 3);
 ---
 
 <BaseLayout
@@ -26,18 +34,81 @@ import headshotImg from '../assets/headshot.jpg';
     }
   </script>
 
-  <!-- Hero Section -->
-  <main class="hero">
-    <div class="hero-content">
-      <div class="hero-text">
-        <h1>Hi, I'm <span class="highlight">Jorge</span></h1>
-        <p class="hero-subtitle">I'm a Spanish-born product manager based in Chicago</p>
-        <p class="hero-description">I help organizations big and small identify opportunities to improve their business and deliver digital product experiences that delight users and drive results.</p>
-        <p class="hero-beliefs">I'm a firm believer that collaboration is the best path forward, software is awesome, and ice cream is the best dessert.</p>
+  <!-- Hero: the name and intro come first in reading order; the grid places
+       the two-ink photo to their left on desktop and above them on phones -->
+  <section class="hero" aria-labelledby="hero-name">
+    <div class="wrap hero-grid">
+      <h1 class="hero-name" id="hero-name">
+        <span class="first">Jorge</span>
+        <span>Mir Alvarez</span>
+      </h1>
+
+      <div class="hero-intro">
+        <p class="hero-lede">Product manager. Born in Spain, based in Chicago.</p>
+        <p>I help organizations big and small identify opportunities to improve their business and deliver digital product experiences that delight users and drive results.</p>
+        <p class="hero-aside">I'm a firm believer that collaboration is the best path forward, software is awesome, and ice cream is the best dessert.</p>
       </div>
-      <div class="hero-image">
-        <Image src={headshotImg} alt="Jorge Mir Alvarez" width={400} height={400} />
+
+      <div class="hero-cover">
+        <div class="hero-photo">
+          <div class="record off-register" aria-hidden="true"></div>
+          <div class="plate">
+            <!-- Blue ink: the photo itself -->
+            <div class="layer layer--blue">
+              <Image src={headshotImg} alt="Jorge Mir Alvarez, smiling, in a red sweater" width={537} height={537} loading="eager" fetchpriority="high" />
+            </div>
+            <!-- Pink ink: a decorative halftone copy of the same image, printed slightly off register -->
+            <div class="layer layer--pink off-register" aria-hidden="true">
+              <Image src={headshotImg} alt="" width={537} height={537} loading="eager" />
+            </div>
+          </div>
+        </div>
+        <p class="credit-line"><strong>Product work for</strong> Twitter/X, Mailchimp, Zapier, CoverWallet and Postlight.</p>
       </div>
     </div>
-  </main>
+  </section>
+
+  <section class="band" aria-labelledby="projects-heading">
+    <div class="wrap">
+      <div class="band-head">
+        <h2 class="section-title" id="projects-heading">Side projects</h2>
+        <p class="band-intro">Things I've built for funsies in my spare time.</p>
+      </div>
+      <div class="project-grid">
+        {projects.map((project) => (
+          <ProjectCard {...project} variant="card" />
+        ))}
+      </div>
+      <p class="band-foot"><a class="more-link" href="/projects">See all projects</a></p>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="testimonials-heading">
+    <div class="wrap">
+      <div class="band-head">
+        <h2 class="section-title" id="testimonials-heading">Testimonials</h2>
+        <p class="band-intro">Nice things people have said about me or what it's like to work with me.</p>
+      </div>
+      <TestimonialCard {...leadTestimonial} variant="lead" />
+      <ul class="quote-grid">
+        {homeTestimonials.map((testimonial) => (
+          <li><TestimonialCard {...testimonial} /></li>
+        ))}
+      </ul>
+      <p class="band-foot"><a class="more-link" href="/testimonials">Read all testimonials</a></p>
+    </div>
+  </section>
+
+  <section class="band" aria-labelledby="writing-heading">
+    <div class="wrap split">
+      <div>
+        <h2 class="section-title" id="writing-heading">Writing</h2>
+        <p class="band-intro">Infrequent reflections on software, life, culture, and whatever is on my mind.</p>
+      </div>
+      <div>
+        <PostList posts={recentPosts} />
+        <p class="band-foot"><a class="more-link" href="/blog">All posts</a></p>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

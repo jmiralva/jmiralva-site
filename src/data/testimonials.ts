@@ -1,0 +1,87 @@
+// Testimonials. /testimonials shows all of them, with the `lead` one as the big
+// opening quote. The home page shows the lead quote plus the names in `homeFeatured`.
+// If a quote is shortened anywhere, show the cut with "…".
+
+export interface Testimonial {
+  quote: string;
+  name: string;
+  nameUrl: string;
+  role: string;
+}
+
+export const leadTestimonialName = 'Paul Ford';
+export const homeFeaturedNames = ['Chris LoSacco', 'Andrew Possehl'];
+
+export const testimonials: Testimonial[] = [
+  {
+    quote: "Jorge is a driving force behind many improvements on the PM team. Some are behind the scenes, which help our team operate smoothly. Others are big & experimental. I'm consistently impressed by the thoughtfulness and thoroughness that he brings to his work.",
+    name: "Vicky Volvovski",
+    nameUrl: "https://www.linkedin.com/in/vickyvolvovski/",
+    role: "Head of Product, Conduit Tech"
+  },
+  {
+    quote: "An incredibly skilled product thinker, strategist, and lead — one of the best I've worked with.",
+    name: "Chris LoSacco",
+    nameUrl: "https://www.linkedin.com/in/closacco/",
+    role: "VP of Solution Architecture, Launch by NTT Data"
+  },
+  {
+    quote: "Jorge helped build this place. It truly would not have been the same Postlight without him and I'm grateful we got to work with him.",
+    name: "Paul Ford",
+    nameUrl: "https://www.linkedin.com/in/ftrain/",
+    role: "Co-Founder, Aboard / CEO, Postlight"
+  },
+  {
+    quote: "Jorge is a thoughtful leader and good at identifying problems from their origin and addressing them. Anyone would be lucky to have him on their team!",
+    name: "Vinod Persiasamy",
+    nameUrl: "https://www.linkedin.com/in/vinod-periasamy/",
+    role: "Senior Engineering Manager, Multi Media, LLC"
+  },
+  {
+    quote: "Jorge was clear with me about process, expectations, and scope. He was flexible, open to suggestions and feedback, and yet it was clear he knew how to deliver results. His attention to detail, expansive product knowledge, strategic thinking, and clear project management made him someone I would be thankful to work with time and time again.",
+    name: "Grace Sunnell",
+    nameUrl: "https://www.linkedin.com/in/gsunnell/",
+    role: "Principal Product Designer, Slack"
+  },
+  {
+    quote: "Jorge is an outstanding product manager and a joy to work with. As a UX researcher, I was deeply impressed by Jorge's ability to take stock of a business problem, and weave together a strategy that included customer research, technical requirements, and design needs. Jorge values the perspectives of his team: he listens attentively and implements changes thoughtfully.",
+    name: "Bronwyn Larsen",
+    nameUrl: "https://www.linkedin.com/in/bronwyn-larsen-81750242/",
+    role: "Senior UX Researcher, Zapier"
+  },
+  {
+    quote: "Jorge is an exceptional product thinker and is leaving behind a place that has grown tremendously as direct result of his collaboration and leadership. We really appreciate what he brought to Postlight, culturally, ethically and as a great practitioner.",
+    name: "Rich Ziade",
+    nameUrl: "https://www.linkedin.com/in/rich-ziade-a600221/",
+    role: "Co-Founder, Aboard / President, Postlight"
+  },
+  {
+    quote: "Jorge was a voice of reason during our short timeline. He pulled us back when we were over-ambitious and directed the project scope to a manageable place. He was very thoughtful with his feedback as we worked through the many small design details.",
+    name: "Andrew Possehl",
+    nameUrl: "https://www.linkedin.com/in/possehl/",
+    role: "Product Designer, Meta"
+  },
+  {
+    quote: "Jorge is a great listener, mentor, and people / product manager. I've learned a lot from him, and I'm grateful for how he has advocated for me.",
+    name: "Lindsey Fogle",
+    nameUrl: "https://www.linkedin.com/in/lindseyfogle/",
+    role: "Group Product Manager, Discourse"
+  },
+  {
+    quote: "Jorge has played a key role in improving the Developer Platform team's own processes, as well as relationships with internal and external stakeholders.",
+    name: "Fokke Zandbergen",
+    nameUrl: "https://www.linkedin.com/in/fokkezb/",
+    role: "Staff Engineer, Zapier"
+  }
+];
+
+// Fails the build with a clear message if a featured name doesn't match an entry above.
+function byName(name: string): Testimonial {
+  const match = testimonials.find((t) => t.name === name);
+  if (!match) throw new Error(`No testimonial named "${name}" in src/data/testimonials.ts`);
+  return match;
+}
+
+export const leadTestimonial = byName(leadTestimonialName);
+export const otherTestimonials = testimonials.filter((t) => t !== leadTestimonial);
+export const homeTestimonials = homeFeaturedNames.map(byName);

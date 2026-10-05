@@ -1,4 +1,6 @@
 ---
+import { socialLinks } from '../data/social';
+
 interface Props {
   title: string;
   description: string;
@@ -18,6 +20,23 @@ const {
   publishedTime,
   modifiedTime
 } = Astro.props;
+
+const navLinks = [
+  { href: '/about', label: 'About' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/testimonials', label: 'Testimonials' },
+  { href: '/blog', label: 'Blog' },
+];
+
+// Marks the nav link for the current page ("page") or section, e.g. a blog post ("true")
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+function ariaCurrent(href: string) {
+  if (currentPath === href) return 'page';
+  if (currentPath.startsWith(href + '/')) return 'true';
+  return undefined;
+}
+
+const year = new Date().getFullYear();
 ---
 
 <!DOCTYPE html>
@@ -62,10 +81,7 @@ const {
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome for social icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,200..800&family=Newsreader:ital,opsz,wght@0,6..72,400..700;1,6..72,400..700&display=swap" rel="stylesheet">
 
     <link rel="stylesheet" href="/styles.css">
 
@@ -73,76 +89,49 @@ const {
     <slot name="head" />
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="nav">
-        <a href="/" class="nav-logo">JMA</a>
-        <div class="nav-links">
-            <a href="/about">About</a>
-            <a href="/projects">Projects</a>
-            <a href="/testimonials">Testimonials</a>
-            <a href="/blog">Blog</a>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-nav">
+        <div class="wrap">
+            <a href="/" class="wordmark" aria-current={currentPath === '/' ? 'page' : undefined}>jmiralva</a>
+            <nav aria-label="Main">
+                <ul class="nav-links">
+                    {navLinks.map((link) => (
+                        <li><a href={link.href} aria-current={ariaCurrent(link.href)}>{link.label}</a></li>
+                    ))}
+                </ul>
+            </nav>
         </div>
-    </nav>
+    </header>
 
-    <!-- Main Content -->
-    <slot />
+    <main id="main">
+        <slot />
+    </main>
 
-    <!-- Footer -->
-    <footer class="connect">
-        <div class="connect-content">
-            <span class="section-label">Connect</span>
-            <h2>Find me across the web</h2>
-            <p class="connect-tagline">Call me beep me if you want to reach me.</p>
+    <footer class="site-footer">
+        <div class="wrap">
+            <h2 class="section-title">Find me across the web</h2>
+            <p class="footer-tagline">Call me beep me if you want to reach me.</p>
 
-            <div class="social-links">
-                <a href="mailto:jorge@jmiralva.me" class="social-link">
-                    <i class="fa-solid fa-envelope"></i>
-                    <span>Email</span>
-                </a>
-                <a href="https://www.linkedin.com/in/jmiralva/" target="_blank" rel="noopener" class="social-link">
-                    <i class="fa-brands fa-linkedin-in"></i>
-                    <span>LinkedIn</span>
-                </a>
-                <a href="https://twitter.com/jmiralva" target="_blank" rel="noopener" class="social-link">
-                    <i class="fa-brands fa-x-twitter"></i>
-                    <span>Twitter</span>
-                </a>
-                <a href="https://www.instagram.com/jmiralva/" target="_blank" rel="noopener" class="social-link">
-                    <i class="fa-brands fa-instagram"></i>
-                    <span>Instagram</span>
-                </a>
-                <a href="https://bandcamp.com/jmiralva" target="_blank" rel="noopener" class="social-link">
-                    <i class="fa-brands fa-bandcamp"></i>
-                    <span>Bandcamp</span>
-                </a>
-                <a href="https://www.goodreads.com/user/show/80876056-jorge-mir-alvarez" target="_blank" rel="noopener" class="social-link">
-                    <i class="fa-brands fa-goodreads-g"></i>
-                    <span>Goodreads</span>
-                </a>
-                <a href="https://music.apple.com/profile/jmiralva" target="_blank" rel="noopener" class="social-link">
-                    <i class="fa-brands fa-apple"></i>
-                    <span>Apple Music</span>
-                </a>
+            <ul class="social-links">
+                {socialLinks.map((link) => {
+                    const external = link.url.startsWith('http');
+                    return (
+                        <li>
+                            <a href={link.url} target={external ? '_blank' : undefined} rel={external ? 'noopener' : undefined}>
+                                <svg viewBox={link.icon.viewBox} aria-hidden="true" focusable="false"><path d={link.icon.path} /></svg>
+                                <span>{link.label}</span>
+                            </a>
+                        </li>
+                    );
+                })}
+            </ul>
+
+            <div class="colophon">
+                <p>© {year} Jorge Mir Alvarez</p>
             </div>
         </div>
-        <div class="footer-bottom">
-            <p>© 2025 Jorge Mir Alvarez</p>
-        </div>
     </footer>
-
-    <!-- Common scripts -->
-    <script is:inline>
-        // Nav background on scroll
-        const nav = document.querySelector('.nav');
-        window.addEventListener('scroll', () => {
-            const currentScroll = window.pageYOffset;
-            if (currentScroll > 100) {
-                nav.style.boxShadow = '0 2px 20px rgba(0, 0, 0, 0.08)';
-            } else {
-                nav.style.boxShadow = 'none';
-            }
-        });
-    </script>
 
     <!-- Page-specific scripts loaded by individual pages -->
     <slot name="scripts" />
