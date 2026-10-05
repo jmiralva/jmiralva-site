@@ -9,7 +9,7 @@ import { projects } from '../data/projects';
 import { homeTestimonials } from '../data/testimonials';
 import { getSortedPosts } from '../utils/posts';
 
-const recentPosts = (await getSortedPosts()).slice(0, 3);
+const recentPosts = (await getSortedPosts()).slice(0, 2);
 ---
 
 <BaseLayout
@@ -28,6 +28,7 @@ const recentPosts = (await getSortedPosts()).slice(0, 3);
       "description": "Product manager based in Chicago, helping organizations deliver digital product experiences that delight users and drive results",
       "sameAs": [
         "https://www.linkedin.com/in/jmiralva/",
+        "https://github.com/jmiralva",
         "https://twitter.com/jmiralva",
         "https://www.instagram.com/jmiralva/"
       ]

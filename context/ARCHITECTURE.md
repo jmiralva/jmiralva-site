@@ -53,7 +53,7 @@ All pages use `BaseLayout.astro` (`src/layouts/BaseLayout.astro`) which provides
 
 **Footer**:
 - Printed in riso blue with a thin pink stripe on top
-- Seven social links with inline SVG icons, read from `src/data/social.ts`
+- Eight social links with inline SVG icons, read from `src/data/social.ts`
 - Copyright year is generated at build time
 
 **Script slots**:
