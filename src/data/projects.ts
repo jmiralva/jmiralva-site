@@ -1,7 +1,7 @@
 // Side projects, newest first. The home page flips through them using `summary`;
 // /projects shows the full `description` and `techStack` (both may contain HTML links).
 import type { ImageMetadata } from 'astro';
-import socialcalImg from '../assets/projects/socialcal-best-day.png';
+import socialcalImg from '../assets/projects/socialcal-share-card.png';
 import wanderlustImg from '../assets/projects/wanderlust-travel-app.png';
 import platesImg from '../assets/projects/plates-with-p-chicago-restaurant-week-guide.png';
 import notionImg from '../assets/projects/notion-job-search-workspace.png';
@@ -24,8 +24,8 @@ export const projects: Project[] = [
     description: 'Find the best days to meet up with friends. Create a calendar, share the link, and see which dates work for the most people. Free, with no sign-up or accounts.',
     url: 'https://socialcal.rsvp/',
     image: socialcalImg,
-    altText: "SocialCal calendar for a fall camping trip, with friends' available days marked and Friday, October 16 circled as the best day",
-    techStack: 'Built with Claude Code on Cloudflare Pages with Pages Functions and a D1 database for the API. It\'s available open source on <a href="https://github.com/jmiralva/SocialCal" target="_blank" rel="noopener noreferrer">GitHub</a>.'
+    altText: "SocialCal logo and the tagline \"Turn 'we should hang out' into an actual date\" beside a month calendar with friends' available days tallied and the 18th circled",
+    techStack: 'Built with Claude Code on Cloudflare Pages with Pages Functions and a D1 database for the API.'
   },
   {
     title: 'Wanderlust',
@@ -39,7 +39,7 @@ export const projects: Project[] = [
   {
     title: 'Plates With P\'s Chicago Restaurant Week 2026 Guide',
     summary: 'A collaboration with Chicago influencer Paige Serena to identify the best deals for Chicago Restaurant Week 2026.',
-    description: 'A collaboration with Chicago influencer <a href="https://www.instagram.com/paigeserena/" target="_blank" rel="noopener noreferrer">Paige Serena</a> to identify the best deals for Chicago Restaurant Week 2026. Featured on Block Club Chicago\'s <a href="https://blockclubchicago.org/2026/01/20/looking-for-chicago-restaurant-week-2026-deals-these-chicagoans-found-them/" target="_blank" rel="noopener noreferrer">Restaurant Week feature</a>.',
+    description: 'A collaboration with Chicago influencer <a href="https://www.instagram.com/paigeserena/" target="_blank" rel="noopener noreferrer">Paige Serena</a> to identify the best deals for Chicago Restaurant Week 2026. Featured on Block Club Chicago\'s <a href="https://blockclubchicago.org/2026/01/20/looking-for-chicago-restaurant-week-2026-deals-these-chicagoans-found-them/" target="_blank" rel="noopener noreferrer">Restaurant Week story</a>.',
     url: 'https://pwp-chicago-restaurant-week.netlify.app/',
     image: platesImg,
     altText: 'Chicago Restaurant Week 2026 guide showing a curated list of restaurant deals with pricing and menu details',
